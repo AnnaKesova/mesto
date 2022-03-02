@@ -1,0 +1,15 @@
+.popup__body {
+    display: flex;
+    align-items: center;
+    padding-top: 123px;
+    position: relative;
+    max-width: 880px;
+  }
+  
+  @media screen and (min-width: 1280px) {
+    .popup__body {
+      padding-top: 195px;
+      justify-content: center;
+      margin: 0 auto;
+    }
+  }

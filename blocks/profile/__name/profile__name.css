@@ -1,0 +1,14 @@
+.profile__name {
+    font-style: normal;
+    font-weight: 500;
+    font-size: 27px;
+    letter-spacing: 0em;
+    line-height: 33px;
+    margin: 0 auto 14px;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .profile__name {
+      margin: 22px 0 16px;
+    }
+  }

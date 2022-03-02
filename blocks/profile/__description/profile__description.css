@@ -1,0 +1,5 @@
+.profile__description {
+    display: flex;
+    min-width: 216px;
+    align-items: center;
+  }

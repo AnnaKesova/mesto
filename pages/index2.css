@@ -186,6 +186,11 @@
     background-color: #000000;
 }
 
+.button:hover {
+    opacity: 80%;
+    cursor: pointer;
+}
+
 .profile__edit-button {
     width: 18px;
     height: 18px;
@@ -331,21 +336,45 @@ color: #545454;
 }
 
 .popup {
+    display: none;
     position: fixed;
     width: 100%;
     height: 100%;
     top: 0;
     left: 0;
     background-color: rgba(0, 0, 0, .5);
-    opacity: 0;
-    visibility: hidden;
 }
 
 .popup__body {
-    min-height: 100%;
     display: flex;
     align-items: center;
+    margin-top: 123px;
     justify-content: center;
+}
+
+@media screen and (min-width: 1280px) {
+    .popup__body {
+        margin-top: 195px;
+    }
+}
+
+.popup__close-icon {
+    position: absolute;
+    top: 87px;
+    right: 19px;
+    height: 20px;
+    width: 20px;
+    border: 0;
+    background-color: transparent;
+}
+
+@media screen and (min-width: 1280px) {
+    .popup__close-icon {
+        width: 32px;
+        height: 32px;
+        top: 155px;
+        right: 385px;
+    }
 }
 
 .popup__content {
@@ -365,6 +394,11 @@ color: #545454;
         width: 430px;
         height: 330px;
     }
+}
+
+.form {
+    display: flex;
+    flex-direction: column;
 }
 
 .popup__form {
@@ -427,8 +461,8 @@ font-style: normal;
 font-weight: 400;
 line-height: 17px;
 letter-spacing: 0em;
-text-align: center;
-
-
 }
 
+.popup__opened {
+    display: block;
+}

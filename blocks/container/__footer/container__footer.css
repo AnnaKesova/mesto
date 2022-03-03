@@ -1,9 +1,9 @@
-.content__footer {
+.container__footer {
     margin-bottom: 36px;
   }
   
   @media screen and (min-width: 768px) {
-    .content__footer {
+    .container__footer {
       margin-bottom: 60px;
     }
   }

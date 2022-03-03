@@ -26,7 +26,7 @@
 @import url(../blocks/cards/__title/cards__title.css);
 @import url(../blocks/cards/__text/cards__text.css);
 @import url(../blocks/cards/__vector/cards__vector.css);
-@import url(../blocks/content/__footer/content__footer.css);
+@import url(../blocks/container/__footer/container__footer.css);
 @import url(../blocks/footer/__text/footer__text.css);
 @import url(../blocks/popup/popup.css);
 @import url(../blocks/popup/__body/popup__body.css);
@@ -34,7 +34,7 @@
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/form/form.css);
 @import url(../blocks/popup/__form/popup__form.css);
-@import url(../blocks/form/__heading/form__heading.css);
+@import url(../blocks/popup/__heading/popup__heading.css);
 @import url(../blocks/form/__info/form__info.css);
 @import url(../blocks/form/__item/form__item.css);
 @import url(../blocks/form/__job-info/form__job-info.css);

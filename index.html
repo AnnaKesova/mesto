@@ -7,174 +7,177 @@
     <link rel="stylesheet" href="./pages/index.css" />
     <title>Mesto</title>
   </head>
-  <body>
-    <div class="wrapper">
-      <div class="wrapper__page page">
-        <div class="container">
-          <div class="container__header header">
-            <img
-              class="header__logo"
-              src="./images/mestologo.svg"
-              alt="Логотип"
-            />
+  <body class="root">
+    <div class="page">
+      <header class="page__header header">
+        <img class="header__logo" src="./images/mestologo.svg" alt="Логотип" />
+      </header>
+      <main class="page__content content">
+        <section class="profile content__profile">
+          <img
+            class="profile__avatar"
+            src="./images/Жак-ивКусто.jpg"
+            alt="Имя пользователя"
+          />
+          <div class="profile__info">
+            <h1 id="header" class="profile__name">Жак-Ив Кусто</h1>
+            <button
+              type="button"
+              class="button profile__edit-button popup-open"
+              title="Редактировать профиль"
+            ></button>
+            <p id="paragraph" class="profile__job">Исследователь океана</p>
           </div>
-          <main class="container__content content">
-            <section class="profile content__profile">
-              <div class="profile__information">
-                <img
-                  class="profile__avatar"
-                  src="./images/Жак-ивКусто.jpg"
-                  alt="Жак-Ив Кусто"
-                />
-                <div class="profile__info">
-                  <div class="profile__description">
-                    <h1 id="header" class="profile__name">Жак-Ив Кусто</h1>
-                    <button
-                      class="button profile__edit-button popup-open"
-                      title="Редактировать профиль"
-                    ></button>
-                  </div>
-                  <p id="paragraph" class="profile__job">
-                    Исследователь океана
-                  </p>
-                </div>
+          <button
+            type="button"
+            class="button profile__add-button"
+            title="Добавить фото"
+          >
+            <img
+              class="profile__add"
+              src="./images/добавить.svg"
+              alt="Добавить фотографии"
+            />
+          </button>
+        </section>
+        <section class="content__cards cards">
+          <ul class="cards__elements">
+            <li class="cards__element photo">
+              <img
+                class="photo__image"
+                src="./images/Карачаевск.jpg"
+                alt="Карачаевск"
+              />
+              <div class="photo__title">
+                <h2 class="photo__text">Карачаевск</h2>
+                <button
+                  type="button"
+                  class="button photo__vector"
+                  title="Нравится"
+                  aria-label="Любимые картинки"
+                ></button>
               </div>
-              <button class="button profile__add-button" title="Добавить фото">
-                <img
-                  class="profile__add"
-                  src="./images/добавить.svg"
-                  alt="Добавить фотографии"
-                />
-              </button>
-            </section>
-            <section class="content__cards cards">
-              <ul class="cards__elements">
-                <li class="cards__element">
-                  <img
-                    class="cards__photo"
-                    src="./images/Карачаевск.jpg"
-                    alt="Карачаевск"
-                  />
-                  <div class="cards__title">
-                    <h2 class="cards__text">Карачаевск</h2>
-                    <button class="button cards__vector" title="Нравится">
-                      <img src="./images/нравится.svg" alt="нравится" />
-                    </button>
-                  </div>
-                </li>
-                <li class="cards__element">
-                  <img
-                    class="cards__photo"
-                    src="./images/гораЭльбрус.jpg"
-                    alt="Эльбрус"
-                  />
-                  <div class="cards__title">
-                    <h2 class="cards__text">Гора Эльбрус</h2>
-                    <button class="button cards__vector" title="Нравится">
-                      <img src="./images/нравится.svg" alt="нравится" />
-                    </button>
-                  </div>
-                </li>
-                <li class="cards__element">
-                  <img
-                    class="cards__photo"
-                    src="./images/Домбай.jpg"
-                    alt="Домбай"
-                  />
-                  <div class="cards__title">
-                    <h2 class="cards__text">Домбай</h2>
-                    <button class="button cards__vector" title="Нравится">
-                      <img src="./images/нравится.svg" alt="нравится" />
-                    </button>
-                  </div>
-                </li>
-                <li class="cards__element">
-                  <img
-                    class="cards__photo"
-                    src="./images/гораЭльбрус.jpg"
-                    alt="Эльбрус"
-                  />
-                  <div class="cards__title">
-                    <h2 class="cards__text">Гора Эльбрус</h2>
-                    <button class="button cards__vector" title="Нравится">
-                      <img src="./images/нравится.svg" alt="нравится" />
-                    </button>
-                  </div>
-                </li>
-                <li class="cards__element">
-                  <img
-                    class="cards__photo"
-                    src="./images/Домбай.jpg"
-                    alt="Домбай"
-                  />
-                  <div class="cards__title">
-                    <h2 class="cards__text">Домбай</h2>
-                    <button class="button cards__vector" title="Нравится">
-                      <img src="./images/нравится.svg" alt="нравится" />
-                    </button>
-                  </div>
-                </li>
-                <li class="cards__element">
-                  <img
-                    class="cards__photo"
-                    src="./images/Карачаевск.jpg"
-                    alt="Карачаевск"
-                  />
-                  <div class="cards__title">
-                    <h2 class="cards__text">Карачаево-Ч...</h2>
-                    <button class="button cards__vector" title="Нравится">
-                      <img src="./images/нравится.svg" alt="нравится" />
-                    </button>
-                  </div>
-                </li>
-              </ul>
-            </section>
-          </main>
-          <footer class="container__footer footer">
-            <p class="footer__text">© 2020 Mesto Russia</p>
-          </footer>
-        </div>
-      </div>
+            </li>
+            <li class="cards__element photo">
+              <img
+                class="photo__image"
+                src="./images/гораЭльбрус.jpg"
+                alt="Эльбрус"
+              />
+              <div class="photo__title">
+                <h2 class="photo__text">Гора Эльбрус</h2>
+                <button
+                  type="button"
+                  class="button photo__vector"
+                  title="Нравится"
+                  aria-label="Любимые картинки"
+                ></button>
+              </div>
+            </li>
+            <li class="cards__element photo">
+              <img
+                class="photo__image"
+                src="./images/Домбай.jpg"
+                alt="Домбай"
+              />
+              <div class="photo__title">
+                <h2 class="photo__text">Домбай</h2>
+                <button
+                  type="button"
+                  class="button photo__vector"
+                  title="Нравится"
+                  aria-label="Любимые картинки"
+                ></button>
+              </div>
+            </li>
+            <li class="cards__element photo">
+              <img
+                class="photo__image"
+                src="./images/гораЭльбрус.jpg"
+                alt="Эльбрус"
+              />
+              <div class="photo__title">
+                <h2 class="photo__text">Гора Эльбрус</h2>
+                <button
+                  type="button"
+                  class="button photo__vector"
+                  title="Нравится"
+                  aria-label="Любимые картинки"
+                ></button>
+              </div>
+            </li>
+            <li class="cards__element photo">
+              <img
+                class="photo__image"
+                src="./images/Домбай.jpg"
+                alt="Домбай"
+              />
+              <div class="photo__title">
+                <h2 class="photo__text">Домбай</h2>
+                <button
+                  type="button"
+                  class="button photo__vector"
+                  title="Нравится"
+                  aria-label="Любимые картинки"
+                ></button>
+              </div>
+            </li>
+            <li class="cards__element photo">
+              <img
+                class="photo__image"
+                src="./images/Карачаевск.jpg"
+                alt="Карачаевск"
+              />
+              <div class="photo__title">
+                <h2 class="photo__text">Карачаево-Ч...</h2>
+                <button
+                  type="button"
+                  class="button photo__vector"
+                  title="Нравится"
+                  aria-label="Любимые картинки"
+                ></button>
+              </div>
+            </li>
+          </ul>
+        </section>
+      </main>
+      <footer class="page__footer footer">
+        <p class="footer__text">© 2020 Mesto Russia</p>
+      </footer>
     </div>
     <div id="popup" class="popup">
       <div class="popup__body">
-        <button class="button popup__close">
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form class="form" name="myForm">
+          <input
+            class="form__item form__item_type_name"
+            type="text"
+            name="username"
+            placeholder="Имя"
+            value="Жак-Ив Кусто"
+          />
+          <input
+            class="form__item form__job form__item_type_job"
+            type="text"
+            name="job"
+            placeholder="О себе"
+            value="Исследователь океана"
+          />
+          <button
+            class="button popup__save"
+            title="Сохранить"
+            type="submit"
+          >
+            Сохранить
+          </button>
+        </form>
+        <button type="button" class="button popup__close">
           <img
             class="popup__close-icon"
             src="./images/CloseIcon.svg"
             alt="Кнопка закрытия"
           />
         </button>
-        <div class="popup__content">
-          <div class="popup__form ">
-            <h1 class="popup__heading">Редактировать профиль</h1>
-            <form class="form">
-              <fieldset class="form__contact-info form__info">
-                <input
-                  class="form__item"
-                  type="text"
-                  name="username"
-                  value="Жак-Ив Кусто"
-                />
-              </fieldset>
-              <fieldset class="form__job-info form__info">
-                <input
-                  class="form__item form__job"
-                  type="text"
-                  name="job"
-                  value="Исследователь океана"
-                />
-              </fieldset>
-              <button
-                class="button popup__submit popup__save"
-                title="Сохранить"
-                type="submit"
-              >
-                Сохранить
-              </button>
-            </form>
-          </div>
-        </div>
       </div>
     </div>
     <script src="./scripts/index.js"></script>

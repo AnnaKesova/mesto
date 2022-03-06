@@ -15,4 +15,4 @@
 ------
 
 
-https://github.com/AnnaKesova/mesto.git
+ https://annakesova.github.io/mesto/

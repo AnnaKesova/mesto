@@ -1,15 +1,15 @@
 .cards__elements {
-    list-style: none;
-    display: grid;
-    justify-content: center;
-    grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
-    grid-gap: 20px;
-    padding: 0;
-    width: 100%;
+  list-style: none;
+  display: grid;
+  justify-content: center;
+  grid-template-columns: repeat(auto-fill, minmax(282px, 1fr));
+  grid-gap: 20px;
+  padding: 0;
+  width: 100%;
+}
+
+@media screen and (min-width: 768px) {
+  .cards__elements {
+    grid-gap: 17px;
   }
-  
-  @media screen and (min-width: 768px) {
-    .cards__elements {
-      grid-gap: 17px;
-    }
-  }
+}

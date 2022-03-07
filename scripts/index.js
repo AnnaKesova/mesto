@@ -20,7 +20,7 @@ let profileName = document.getElementById('header');
 let profilejob = document.getElementById('paragraph');
 
 // Обработчик «отправки» формы, хотя пока
-// она никуда отправляться не будет
+// она никуда отправляться не  будет
 function SubmitButtonSave (evt) {
     evt.preventDefault(); // Эта строчка отменяет стандартную отправку формы.
                                                 // Так мы можем определить свою логику отправки.

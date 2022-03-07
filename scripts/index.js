@@ -9,18 +9,18 @@ let jobInput = document.querySelector("input[name=job]");// Воспользуй
 let profileName = document.getElementById('header');
 let profilejob = document.getElementById('paragraph');
 
-function popuptoggle () {
-    popup.classList.toggle('popup__opened_active');//функция для открытия поп-апа
+function popupopen () {
+    popup.classList.add('popup__opened_active');//функция для открытия поп-апа
 }
 
-openPopup.addEventListener('click', popuptoggle);// по клику присваевается класс открытия
+openPopup.addEventListener('click', popupopen);// по клику присваевается класс открытия
 openPopup.classList.contains('popup__opened_active');//проверка - присвоен ли класс открытия
 
-function popuptoggle () {
-    popup.classList.toggle('popup__opened_active');//функция для закрытия 
+function popupclose () {
+    popup.classList.remove('popup__opened_active');//функция для закрытия 
 }
 
-closePopup.addEventListener('click', popuptoggle); 
+closePopup.addEventListener('click', popupclose); 
 // Находим форму в DOM
 
 
@@ -44,7 +44,7 @@ function SubmitButtonSave (evt) {
     profileName.textContent = usernameText; 
     profilejob.textContent = jobText; 
     // Вставьте новые значения с помощью textContent
-    popuptoggle ();
+    popupclose ();
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»

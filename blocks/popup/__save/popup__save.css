@@ -9,6 +9,7 @@
   width: 100%;
   border: none;
   border-radius: 2px;
+  padding: 0;
 }
 
 .popup__save:hover {

@@ -4,20 +4,23 @@ const openPopup = document.querySelector('.popup-open');//кнопка откр�
 const closePopup = popup.querySelector('.popup__close');//кнопка закрытия поп-апа
 let formElement = document.querySelector('.form');//Воспользуйтесь методом querySelector()
 // Находим 6поля формы в DOM
-let nameInput = document.querySelector("input[name=username]") ;// Воспользуйтесь инструментом .querySelector()
-let jobInput = document.querySelector("input[name=job]");// Воспользуйтесь инструментом .querySelector()
+let nameInput = document.querySelector(".form__item_type_name") ;// Воспользуйтесь инструментом .querySelector()
+let jobInput = document.querySelector(".form__item_type_job");// Воспользуйтесь инструментом .querySelector()
 let profileName = document.getElementById('header');
 let profilejob = document.getElementById('paragraph');
 
 function popupopen () {
-    popup.classList.add('popup__opened_active');//функция для открытия поп-апа
+    popup.classList.add('popup_active');//функция для открытия поп-апа
+    nameInput.value = profileName.textContent; //записываем данные в инпут из профайла
+     jobInput.value = profilejob.textContent;
 }
 
 openPopup.addEventListener('click', popupopen);// по клику присваевается класс открытия
-openPopup.classList.contains('popup__opened_active');//проверка - присвоен ли класс открытия
+
+     
 
 function popupclose () {
-    popup.classList.remove('popup__opened_active');//функция для закрытия 
+    popup.classList.remove('popup_active');//функция для закрытия 
 }
 
 closePopup.addEventListener('click', popupclose); 
@@ -35,14 +38,13 @@ function SubmitButtonSave (evt) {
     // Выберите элементы, куда должны быть вставлены значения полей
 
 
-     usernameText = nameInput.value; 
-     jobText = jobInput.value; 
+    profileName.textContent = nameInput.value; 
+    profilejob.textContent = jobInput.value;
      
-   //  console.log(profileName.textContent);
-   //  console.log(profilejob.textContent);
+     //console.log(profileName.textContent);
+     //console.log(profilejob.textContent);
 
-    profileName.textContent = usernameText; 
-    profilejob.textContent = jobText; 
+     
     // Вставьте новые значения с помощью textContent
     popupclose ();
 }

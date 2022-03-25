@@ -1,0 +1,26 @@
+.popup-cards__create {
+    color: #ffffff;
+    font-family: "Inter", "Helvetica Neue", Arial, sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 17px;
+    min-height: 46px;
+    width: 100%;
+    border: none;
+    border-radius: 2px;
+    background-color: #000000;
+    padding: 0;
+  }
+  
+  .popup-cards__creave:hover {
+    opacity: 80%;
+  }
+  
+  @media screen and (min-width: 768px) {
+    .popup-cards__create {
+      min-height: 50px;
+      font-size: 18px;
+      line-height: 22px;
+    }
+  }

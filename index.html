@@ -10,7 +10,10 @@
   <body class="root">
     <div class="page">
       <header class="page__header header">
-        <img class="header__logo" src="./images/mestologo.svg" alt="Логотип" />
+        <img 
+        class="header__logo" 
+        src="./images/mestologo.svg" 
+        alt="Логотип" />
       </header>
       <main class="page__content content">
         <section class="profile content__profile">
@@ -30,7 +33,7 @@
           </div>
           <button
             type="button"
-            class="button profile__add-button"
+            class="button profile__add-button add-open"
             title="Добавить фото"
           >
             <img
@@ -57,6 +60,12 @@
                   aria-label="Любимые картинки"
                 ></button>
               </div>
+              <button
+                type="button"
+                class="button photo__bin"
+                title="Удаление"
+                aria-label="Урна"
+              ></button>
             </li>
             <li class="cards__element photo">
               <img
@@ -73,6 +82,12 @@
                   aria-label="Любимые картинки"
                 ></button>
               </div>
+              <button
+                type="button"
+                class="button photo__bin"
+                title="Удаление"
+                aria-label="Урна"
+              ></button>
             </li>
             <li class="cards__element photo">
               <img
@@ -89,6 +104,12 @@
                   aria-label="Любимые картинки"
                 ></button>
               </div>
+              <button
+                type="button"
+                class="button photo__bin"
+                title="Удаление"
+                aria-label="Урна"
+              ></button>
             </li>
             <li class="cards__element photo">
               <img
@@ -105,6 +126,12 @@
                   aria-label="Любимые картинки"
                 ></button>
               </div>
+              <button
+                type="button"
+                class="button photo__bin"
+                title="Удаление"
+                aria-label="Урна"
+              ></button>
             </li>
             <li class="cards__element photo">
               <img
@@ -121,6 +148,12 @@
                   aria-label="Любимые картинки"
                 ></button>
               </div>
+              <button
+                type="button"
+                class="button photo__bin"
+                title="Удаление"
+                aria-label="Урна"
+              ></button>
             </li>
             <li class="cards__element photo">
               <img
@@ -137,6 +170,12 @@
                   aria-label="Любимые картинки"
                 ></button>
               </div>
+              <button
+                type="button"
+                class="button photo__bin"
+                title="Удаление"
+                aria-label="Урна"
+              ></button>
             </li>
           </ul>
         </section>
@@ -163,17 +202,20 @@
             placeholder="О себе"
             value=""
           />
-          <button 
-           type="submit"
-           class="button popup__save"
-           title="Сохранить" 
-           >
+          <button
+            type="submit"
+            class="button popup__save"
+            title="Сохранить"
+            aria-label="Хранить"
+          >
             Сохранить
           </button>
         </form>
-        <button
-        type="button" 
-        class="button popup__close">
+        <button 
+          type="button" 
+          class="button popup__close"
+          title="Закрыть"
+          aria-label="Закрытие">
           <img
             class="popup__close-icon"
             src="./images/CloseIcon.svg"
@@ -182,6 +224,85 @@
         </button>
       </div>
     </div>
+    <div id="popup-card" class="popup-cards">
+      <div class="popup__body">
+        <h2 class="popup__heading">Новое место</h2>
+        <form class="form-card" name="FormCards">
+          <input
+            class="form__item form-cards_type_name"
+            type="text"
+            name="cardname"
+            placeholder="Название"
+            value=""
+          />
+          <input
+            class="form__item form-cards__link form-cards_type_link"
+            type="text"
+            name="link"
+            placeholder="Ссылка на картинку"
+            value=""
+          />
+          <button
+            type="submit"
+            class="button popup-cards__create"
+            title="Создать"
+            aria-label="Сделать"
+          >
+            Создать
+          </button>
+        </form>
+        <button
+          type="button"
+          class="button popup-cards__close"
+          title="Закрыть"
+          aria-label="Закрытие"
+        >
+          <img
+            class="popup__close-icon"
+            src="./images/CloseIcon.svg"
+            alt="Кнопка закрытия"
+          />
+        </button>
+      </div>
+    </div>
+    <div id="popup-image" class="popup-image">
+      <div class="popup-image__body">
+        <img 
+          class="popup-image__photo" 
+          src="" 
+          alt="" />
+        <p class="popup-image__text"></p>
+        <button
+          type="button"
+          class="button popup-image__close"
+          title="Закрытие"
+          aria-label="Закрыть"
+        ></button>
+      </div>
+    </div>
+    <template id="template-photo">
+      <li class="cards__element photo">
+        <img 
+          src="" 
+          class="photo__image" 
+          alt="" />
+        <div class="photo__title">
+          <h2 class="photo__text"></h2>
+          <button
+            type="button"
+            class="button photo__vector"
+            title="Нравится"
+            aria-label="Любимые картинки"
+          ></button>
+        </div>
+        <button
+          type="button"
+          class="button photo__bin"
+          title="Удаление"
+          aria-label="Урна"
+        ></button>
+      </li>
+    </template>
     <script src="./scripts/index.js"></script>
   </body>
 </html>

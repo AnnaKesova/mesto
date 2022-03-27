@@ -10,10 +10,7 @@
   <body class="root">
     <div class="page">
       <header class="page__header header">
-        <img 
-        class="header__logo" 
-        src="./images/mestologo.svg" 
-        alt="Логотип" />
+        <img class="header__logo" src="./images/mestologo.svg" alt="Логотип" />
       </header>
       <main class="page__content content">
         <section class="profile content__profile">
@@ -44,147 +41,14 @@
           </button>
         </section>
         <section class="content__cards cards">
-          <ul class="cards__elements">
-            <li class="cards__element photo">
-              <img
-                class="photo__image"
-                src="./images/Карачаевск.jpg"
-                alt="Карачаевск"
-              />
-              <div class="photo__title">
-                <h2 class="photo__text">Карачаевск</h2>
-                <button
-                  type="button"
-                  class="button photo__vector"
-                  title="Нравится"
-                  aria-label="Любимые картинки"
-                ></button>
-              </div>
-              <button
-                type="button"
-                class="button photo__bin"
-                title="Удаление"
-                aria-label="Урна"
-              ></button>
-            </li>
-            <li class="cards__element photo">
-              <img
-                class="photo__image"
-                src="./images/гораЭльбрус.jpg"
-                alt="Эльбрус"
-              />
-              <div class="photo__title">
-                <h2 class="photo__text">Гора Эльбрус</h2>
-                <button
-                  type="button"
-                  class="button photo__vector"
-                  title="Нравится"
-                  aria-label="Любимые картинки"
-                ></button>
-              </div>
-              <button
-                type="button"
-                class="button photo__bin"
-                title="Удаление"
-                aria-label="Урна"
-              ></button>
-            </li>
-            <li class="cards__element photo">
-              <img
-                class="photo__image"
-                src="./images/Домбай.jpg"
-                alt="Домбай"
-              />
-              <div class="photo__title">
-                <h2 class="photo__text">Домбай</h2>
-                <button
-                  type="button"
-                  class="button photo__vector"
-                  title="Нравится"
-                  aria-label="Любимые картинки"
-                ></button>
-              </div>
-              <button
-                type="button"
-                class="button photo__bin"
-                title="Удаление"
-                aria-label="Урна"
-              ></button>
-            </li>
-            <li class="cards__element photo">
-              <img
-                class="photo__image"
-                src="./images/гораЭльбрус.jpg"
-                alt="Эльбрус"
-              />
-              <div class="photo__title">
-                <h2 class="photo__text">Гора Эльбрус</h2>
-                <button
-                  type="button"
-                  class="button photo__vector"
-                  title="Нравится"
-                  aria-label="Любимые картинки"
-                ></button>
-              </div>
-              <button
-                type="button"
-                class="button photo__bin"
-                title="Удаление"
-                aria-label="Урна"
-              ></button>
-            </li>
-            <li class="cards__element photo">
-              <img
-                class="photo__image"
-                src="./images/Домбай.jpg"
-                alt="Домбай"
-              />
-              <div class="photo__title">
-                <h2 class="photo__text">Домбай</h2>
-                <button
-                  type="button"
-                  class="button photo__vector"
-                  title="Нравится"
-                  aria-label="Любимые картинки"
-                ></button>
-              </div>
-              <button
-                type="button"
-                class="button photo__bin"
-                title="Удаление"
-                aria-label="Урна"
-              ></button>
-            </li>
-            <li class="cards__element photo">
-              <img
-                class="photo__image"
-                src="./images/Карачаевск.jpg"
-                alt="Карачаевск"
-              />
-              <div class="photo__title">
-                <h2 class="photo__text">Карачаево-Ч...</h2>
-                <button
-                  type="button"
-                  class="button photo__vector"
-                  title="Нравится"
-                  aria-label="Любимые картинки"
-                ></button>
-              </div>
-              <button
-                type="button"
-                class="button photo__bin"
-                title="Удаление"
-                aria-label="Урна"
-              ></button>
-            </li>
-          </ul>
+          <ul class="cards__elements"></ul>
         </section>
       </main>
       <footer class="page__footer footer">
         <p class="footer__text">© 2020 Mesto Russia</p>
       </footer>
     </div>
-    <div id="popup" class="popup">
+    <div id="popup-form" class="popup popup-form">
       <div class="popup__body">
         <h2 class="popup__heading">Редактировать профиль</h2>
         <form class="form" name="myForm">
@@ -211,32 +75,27 @@
             Сохранить
           </button>
         </form>
-        <button 
-          type="button" 
+        <button
+          type="button"
           class="button popup__close"
           title="Закрыть"
-          aria-label="Закрытие">
-          <img
-            class="popup__close-icon"
-            src="./images/CloseIcon.svg"
-            alt="Кнопка закрытия"
-          />
-        </button>
+          aria-label="Закрытие"
+        ></button>
       </div>
     </div>
-    <div id="popup-card" class="popup-cards">
-      <div class="popup-cards__body">
-        <h2 class="popup-cards__heading">Новое место</h2>
-        <form class="form-card" name="FormCards">
+    <div id="popup-card" class="popup popup-cards">
+      <div class="popup__body">
+        <h2 class="popup__heading">Новое место</h2>
+        <form class="form form-card" name="FormCards">
           <input
-            class="form-card__item form-card__item_type_name"
+            class="form__item form__item_type_city"
             type="text"
             name="cardname"
             placeholder="Название"
             value=""
           />
           <input
-            class="form-card__item form-card__item_type_link"
+            class="form__item form__item_type_link"
             type="text"
             name="link"
             placeholder="Ссылка на картинку"
@@ -244,7 +103,7 @@
           />
           <button
             type="submit"
-            class="button popup-cards__create"
+            class="button popup__save popup-cards__create"
             title="Создать"
             aria-label="Сделать"
           >
@@ -253,28 +112,19 @@
         </form>
         <button
           type="button"
-          class="button popup-cards__close"
+          class="button popup__close popup-cards__close"
           title="Закрыть"
           aria-label="Закрытие"
-        >
-          <img
-            class="popup-cards__icon"
-            src="./images/CloseIcon.svg"
-            alt="Кнопка закрытия"
-          />
-        </button>
+        ></button>
       </div>
     </div>
-    <div id="popup-image" class="popup-image">
-      <div class="popup-image__body">
-        <img 
-          class="popup-image__photo" 
-          src="#" 
-          alt="" />
-        <p class="popup-image__text"></p>
+    <div id="popup-image" class="popup popup-image">
+      <div class="popup__content">
+        <img class="popup__photo" src="#" alt="" />
+        <p class="popup__text"></p>
         <button
           type="button"
-          class="button popup-image__close"
+          class="button popup__close popup-image__close"
           title="Закрытие"
           aria-label="Закрыть"
         ></button>
@@ -282,10 +132,7 @@
     </div>
     <template id="template-photo">
       <li class="cards__element photo">
-        <img 
-          src="#" 
-          class="photo__image" 
-          alt="" />
+        <img src="#" class="photo__image" alt="" />
         <div class="photo__title">
           <h2 class="photo__text"></h2>
           <button

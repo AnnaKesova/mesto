@@ -1,28 +1,24 @@
 const popup = document.querySelector('.popup');
 
-const popupForm = document.querySelector('.popup-form');// поп-пап с формой
-const popupFormButton = document.querySelector('.popup-open');//кнопка открытия поп-апа
+const openPopup = document.querySelector('.popup-open');//кнопка открытия поп-апа
 const popupCloseButton = popup.querySelector('.popup__close');//кнопка закрытия поп-апа
 const profileForm = document.querySelector('.form');//Воспользуйтесь методом querySelector()
-// Находим поля формы в DOM
+// Находим 6поля формы в DOM
 const nameInput = document.querySelector(".form__item_type_name") ;// Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector(".form__item_type_job");// Воспользуйтесь инструментом .querySelector()
 const profileName = document.getElementById('header');
 const profilejob = document.getElementById('paragraph');
 
-const popupCards = document.querySelector('.popup-cards');//поп-пап формы с картинками
-const addOpenButton = document.querySelector('.add-open');//кнопка открытия формы поп-апа с картинками
-const addCloseButton = popupCards.querySelector('.popup__close');// кнопка закрытия поп-апа с картинками
-
-const cardsContainer = document.querySelector('.cards__elements');// список контейнер
-const formCardsName = popupCards.querySelector('.form__item_type_city');//для создания карточки город
-const formCardsLink = popupCards.querySelector('.form__item_type_link');//для создания карточки ссылка
-const formCard = popupCards.querySelector('.form-card');//для создания карточки картинки
-const popupImage = document.querySelector('.popup-image');// поп-пап открытия картинки
-const popupImageButton = popupImage.querySelector('.popup-image__close');// кнопка закрытия поп-апа с картинкой
-const imagePhoto = popupImage.querySelector('.popup__photo');// открытие картинки
-const imageText = popupImage.querySelector('.popup__text');// открытие текста под картинкой
-
+const popupCards = document.querySelector('.popup-cards');
+const addOpenButton = document.querySelector('.add-open');
+const addCloseButton = document.querySelector('.popup-cards__close');
+const formCards = document.querySelector('.form-cards');
+const cardsContainer = document.querySelector('.cards__elements');
+const formCardsName = popupCards.querySelector('.form__item_type_city');
+const formCardsLink = popupCards.querySelector('.form__item_type_link');
+const formCard = popupCards.querySelector('.form-card');
+const popupImage = document.querySelector('.popup-image');
+const popupImageClose = popupImage.querySelector('.popup-image__close');
 
 const initialCards = [
     {
@@ -50,28 +46,12 @@ const initialCards = [
       link: 'https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg'
     }
   ];
-
-  //функция открытия поп-апов
-  function openPopup(popup) {
-    popup.classList.add('popup_active'); //функция для открытия поп-апа
-  }
-   //popupForm.addEventListener('click', openPopup);// по клику присваевается класс открытия   
-    addOpenButton.addEventListener('click', () => openPopup (popupCards));// открытие поп-апа добовления картинки
-  
-   //функция закрытия поп-апов
- function closePopup (popup)  {
-    popup.classList.remove('popup_active');//функция для закрытия
-    }
-    popupCloseButton.addEventListener('click', () => closePopup(popupForm)); 
-    addCloseButton.addEventListener('click', () => closePopup(popupCards));
-    popupImageButton.addEventListener('click', () => closePopup(popupImage));
   //функция создания карточки
     const createCard = (initialCards) => {
-    const templatePhoto = document.querySelector('#template-photo').content
+    const templatePhoto = document.querySelector('#template-photo').content;
     const photoCard = templatePhoto.querySelector('.photo').cloneNode(true);
-    const photoImage = photoCard.querySelector('.photo__image');
-    photoImage.src = initialCards.link;
-    photoImage.alt = initialCards.name;
+    photoCard.querySelector('.photo__image').src = initialCards.link;
+    photoCard.querySelector('.photo__image').alt = initialCards.name;
     photoCard.querySelector('.photo__text').textContent = initialCards.name;
 
     //функция like
@@ -89,21 +69,12 @@ const initialCards = [
      event.target.closest('.photo').remove();
     }); 
 
-    //открытие поп-апа с картинкой
-
-    photoImage.addEventListener('click', function () {
-     // console.log(photoImage.alt);
-    imagePhoto.src = photoImage.src;
-    imagePhoto.alt = photoImage.alt;
-    imageText.textContent = photoImage.alt;
-    openPopup(popupImage);
-    
-    });
-    
+    // Клонируем шаблон, наполняем его информацией из объекта data, навешиваем всякие обработчики событий, о которых будет инфа ниже
+    // Возвращаем получившуюся карточку
     return photoCard; 
 
+
   };
-  
   //массив
   function renderInitialCards(initialCards) {
     initialCards.forEach((item) => {
@@ -112,25 +83,39 @@ const initialCards = [
   }
    
   renderInitialCards(initialCards);
+
+  //функция создания карточки с помощью поп-апа
+  function submitCard (evt) {
+    evt.preventDefault();
+    cardsContainer.prepend(createCard({name: formCardsName.value, 
+     link: formCardsLink.value}));
+   
+     formCard.reset();
+   
+    addpopupclose();
+  }
  
- //функция создания карточки с помощью поп-апа
- function submitCard (evt) {
-  evt.preventDefault();
-  cardsContainer.prepend(createCard({name: formCardsName.value, 
-   link: formCardsLink.value}));
+ formCard.addEventListener('submit', submitCard);
  
-   formCard.reset();
- 
-   closePopup(popupCards);
+ //функция открытия поп-апов
+  function openPopup() {
+  popup.classList.add('popup_active'); //функция для открытия поп-апа
 }
-formCard.addEventListener('submit', submitCard);
-//Сохранение данных для поп-апа формы
-popupFormButton.addEventListener('click', function () {
-    openPopup(popupForm);
+ openPopup.addEventListener('click', openPopup);// по клику присваевается класс открытия   
+
+/*function popupopen () {
+    popup.classList.add('popup_active');//функция для открытия поп-апа
     nameInput.value = profileName.textContent; //записываем данные в инпут из профайла
      jobInput.value = profilejob.textContent;
-});
+}
 
+openPopup.addEventListener('click', popupopen);// по клику присваевается класс открытия   
+
+function popupclose () {
+    popup.classList.remove('popup_active');//функция для закрытия 
+}
+
+popupCloseButton.addEventListener('click', popupclose); */
 // Находим форму в DOM
 // Обработчик «отправки» формы
 function SubmitButtonSave (evt) {
@@ -139,14 +124,49 @@ function SubmitButtonSave (evt) {
                                                 // О том, как это делать, расскажем позже.
    // Получите значение полей jobInput и nameInput из свойства value
     // Выберите элементы, куда должны быть вставлены значения полей
+
     profileName.textContent = nameInput.value; 
-    profilejob.textContent = jobInput.value;  
+    profilejob.textContent = jobInput.value;
+     
      //console.log(profileName.textContent);
      //console.log(profilejob.textContent);
-    // Вставьте новые значения с помощью textContent 
-    closePopup (popupForm);
+    // Вставьте новые значения с помощью textContent
+    
+    popupclose ();
 }
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
+
 profileForm.addEventListener('submit', SubmitButtonSave);
 
+function addpopupopen () {
+    popupCards.classList.add('popup-cards_active');//функция для открытия поп-апа
+}
+
+addOpenButton.addEventListener('click', addpopupopen);// по клику присваевается класс открытия
+
+function addpopupclose () {
+    popupCards.classList.remove('popup-cards_active');
+}
+
+addCloseButton.addEventListener('click', addpopupclose);// закрытие поп-апа кнопки добавить фото
+//открытие поп-апа с картинкой
+function openPopupImage (event) {
+  const photoImage = event.target.closest('.photo__image');
+  if(!photoImage){
+    return;
+  }
+  const Imagephoto = popupImage.querySelector('.popup-image__photo');
+  const ImageText = popupImage.querySelector('.popup-image__text');
+ Imagephoto.src = photoImage.src;
+ Imagephoto.alt = photoImage.alt;
+ ImageText.textContent = photoImage.alt;
+  popupImage.classList.add('popup-image_active');
+}
+
+document.body.addEventListener('click', openPopupImage);
+//закрытие поп-апа с картинкой
+function closePopupImage () {
+  popupImage.classList.remove('popup-image_active');
+}
+popupImageClose.addEventListener('click', closePopupImage);

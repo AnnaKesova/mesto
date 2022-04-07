@@ -1,3 +1,4 @@
+const popupsWindows = document.querySelectorAll('.popup')
 const profilePopup = document.querySelector('.popup-form');// поп-пап с формой
 const profileOpenButton = document.querySelector('.popup-open');//кнопка открытия поп-апа
 const profileCloseButton = document.querySelector('.popup__close');//кнопка закрытия поп-апа
@@ -20,6 +21,7 @@ const imagePopup = document.querySelector('.popup-image');// поп-пап от�
 const imageCloseButton = imagePopup.querySelector('.popup-image__close');// кнопка закрытия поп-апа с картинкой
 const imagePhoto = imagePopup.querySelector('.popup__photo');// открытие картинки
 const imageText = imagePopup.querySelector('.popup__text');// открытие текста под картинкой
+
 
 
 const initialCards = [
@@ -51,18 +53,48 @@ const initialCards = [
 
   //функция открытия поп-апов
   function openPopup(popup) {
+    document.addEventListener('keydown', handleEscUp);
     popup.classList.add('popup_active'); //функция для открытия поп-апа
-  }
-   //popupForm.addEventListener('click', openPopup);// по клику присваевается класс открытия   
-    addOpenButton.addEventListener('click', () => openPopup (cardsPopup));// открытие поп-апа добовления картинки
+  } 
+    
   
    //функция закрытия поп-апов
  function closePopup (popup)  {
+   document.removeEventListener('keydown', handleEscUp);
+
     popup.classList.remove('popup_active');//функция для закрытия
     }
     profileCloseButton.addEventListener('click', () => closePopup(profilePopup)); 
     addCloseButton.addEventListener('click', () => closePopup(cardsPopup));
     imageCloseButton.addEventListener('click', () => closePopup(imagePopup));
+    
+    //закрытие поп-апа на escup
+    const handleEscUp = (evt) => {
+      evt.preventDefault
+      const activePopup = document.querySelector('.popup_active');
+      if (evt.key === 'Escape') {
+        closePopup(activePopup);
+      }
+    };
+   
+    // Закрытие popup кликом на overlay
+const handleOverlay = (popup) => {
+  popup.addEventListener('click', (event) => {
+    if (event.target === event.currentTarget) {
+      closePopup(popup);
+    }
+  });
+};
+
+// Перебор popup и закрываем при помощи клика на overlay 
+const renderPopupOverlay = (popupsWindows) => {
+  popupsWindows.forEach((popup) => {
+    handleOverlay(popup);
+  });
+};
+
+renderPopupOverlay(popupsWindows);
+    
   //функция создания карточки
     const createCard = (initialCards) => {
     const templatePhoto = document.querySelector('#template-photo').content
@@ -107,23 +139,32 @@ const initialCards = [
   }
    
   renderInitialCards(initialCards);
+
+
+const deleteSubmitButton = () => {
+  const saveButton = document.querySelector('.popup__save');// кнопка "Сохранить", "Создать"
+  saveButton.classList.add('popup__save_disabled');
+  saveButton.disabled = true;
+}
  
  //функция создания карточки с помощью поп-апа
  function addCard (evt) {
   evt.preventDefault();
   cardsContainer.prepend(createCard({name: formCardsName.value, 
    link: formCardsLink.value}));
- 
    formCard.reset();
- 
    closePopup(cardsPopup);
 }
 formCard.addEventListener('submit', addCard);
+
+
 //Сохранение данных для поп-апа формы
 profileOpenButton.addEventListener('click', function () {
+  deleteSubmitButton();
     openPopup(profilePopup);
     nameInput.value = profileName.textContent; //записываем данные в инпут из профайла
      jobInput.value = profilejob.textContent;
+     
 });
 
 // Находим форму в DOM
@@ -136,6 +177,7 @@ function handleProfileFormSubmit (evt) {
     // Выберите элементы, куда должны быть вставлены значения полей
     profileName.textContent = nameInput.value; 
     profilejob.textContent = jobInput.value;  
+
      //console.log(profileName.textContent);
      //console.log(profilejob.textContent);
     // Вставьте новые значения с помощью textContent 
@@ -144,4 +186,11 @@ function handleProfileFormSubmit (evt) {
 // Прикрепляем обработчик к форме:
 // он будет следить за событием “submit” - «отправка»
 profileForm.addEventListener('submit', handleProfileFormSubmit);
+
+
+addOpenButton.addEventListener('click', function() {
+  
+  openPopup (cardsPopup);
+} );// открытие поп-апа добовления картинки
+
 

@@ -45,32 +45,49 @@
         </section>
       </main>
       <footer class="page__footer footer">
-        <p class="footer__text">© 2020 Mesto Russia</p>
+        <p class="footer__text">© 2022 Mesto Russia</p>
       </footer>
     </div>
     <div id="popup-form" class="popup popup-form">
       <div class="popup__body">
         <h2 class="popup__heading">Редактировать профиль</h2>
-        <form class="form" name="myForm">
+        <form class="form" name="myForm" novalidate>
           <input
             class="form__item form__item_type_name"
             type="text"
             name="username"
             placeholder="Имя"
             value=""
+            minlength="2"
+            maxlength="40"
+            required
+            id="username"
           />
+          <span
+            class="form__item-error form__item-error_active"
+            id="username-error"
+          ></span>
           <input
             class="form__item form__job form__item_type_job"
             type="text"
             name="job"
             placeholder="О себе"
             value=""
+            minlength="2"
+            maxlength="200"
+            required
+            id="job"
           />
+          <span
+            class="form__item-error form__item-error_active"
+            id="job-error"
+          ></span>
           <button
             type="submit"
             class="button popup__save"
             title="Сохранить"
             aria-label="Хранить"
+            disabled
           >
             Сохранить
           </button>
@@ -93,19 +110,34 @@
             name="cardname"
             placeholder="Название"
             value=""
+            required
+            minlength="2"
+            maxlength="30"
+            id="cardname"
           />
+          <span
+            class="form__item-error form__item-error_active"
+            id="cardname-error"
+          ></span>
           <input
             class="form__item form__item_type_link"
-            type="text"
+            type="url"
             name="link"
             placeholder="Ссылка на картинку"
             value=""
+            required
+            id="link"
           />
+          <span
+            class="form__item-error form__item-error_active"
+            id="link-error"
+          ></span>
           <button
             type="submit"
             class="button popup__save popup-cards__create"
             title="Создать"
             aria-label="Сделать"
+            disabled
           >
             Создать
           </button>
@@ -150,6 +182,7 @@
         ></button>
       </li>
     </template>
-    <script src="./scripts/index.js"></script>
+    <script src="./scripts/index.js" defer></script>
+    <script src="./scripts/validate.js" defer></script>
   </body>
 </html>

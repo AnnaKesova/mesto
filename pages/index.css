@@ -37,3 +37,10 @@
 @import url(../blocks/popup/__photo/popup__photo.css);
 @import url(../blocks/popup/__content/popup__content.css);
 @import url(../blocks/popup/__text/popup__text.css);
+@import url(../blocks/form/__item-error/form__item-error.css);
+@import url(../blocks/form/_type/form__item_type_error.css);
+@import url(../blocks/popup/__save/_disabled/popup__save_disabled.css);
+
+
+
+

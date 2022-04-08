@@ -10,7 +10,7 @@
   overflow: hidden;
 }
 
-@media screen and (min-width: 768px) {
+@media screen and (min-width: 1024px) {
   .profile__job {
     max-width: 336px;
     margin: 0;
@@ -18,3 +18,5 @@
     line-height: 22px;
   }
 }
+
+

@@ -14,7 +14,7 @@
   margin-top: 20px;
 }
 
-.popup__save:hover {
+.popup__save:not([disabled]):hover {
   opacity: 80%;
 }
 

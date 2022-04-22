@@ -1,3 +1,7 @@
+import { Card } from "./card.js";
+export { imagePhoto, imageText, openPopup, imagePopup };
+import { FormValidator } from "./validate.js";
+
 const popupsWindows = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".popup-form"); // поп-пап с формой
 const profileOpenButton = document.querySelector(".popup-open"); //кнопка открытия поп-апа
@@ -10,8 +14,8 @@ const profilejob = document.getElementById("paragraph");
 const cardsPopup = document.querySelector(".popup-cards"); //поп-пап формы с картинками
 const cardOpenButton = document.querySelector(".add-open"); //кнопка открытия формы поп-апа с картинками
 
-const cardCreateButton = cardsPopup.querySelector(".popup-cards__create");// кнопка создания картинки из поп-апа
-const formSaveButton = profilePopup.querySelector(".popup-form__save");// кнопка сохранения формы из поп-апа
+const cardCreateButton = cardsPopup.querySelector(".popup-cards__create"); // кнопка создания картинки из поп-апа
+const formSaveButton = profilePopup.querySelector(".popup-form__save"); // кнопка сохранения формы из поп-апа
 
 const cardsContainer = document.querySelector(".cards__elements"); // список контейнер
 const formCardsName = cardsPopup.querySelector(".form__item_type_city"); //для создания карточки город
@@ -47,6 +51,19 @@ const initialCards = [
     link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
   },
 ];
+
+const obj = {
+  formSelector: ".form",
+  inputSelector: ".form__item",
+  submitButtonSelector: ".popup__save",
+  inactiveButtonClass: "popup__save_disabled",
+  inputErrorClass: "form__item-error_active",
+  errorClass: "form__item_type_error",
+};
+
+//валидация форм
+const validityForm = new FormValidator(obj, profileForm);
+const validityCard = new FormValidator(obj, formCard);
 
 //функция открытия поп-апов
 function openPopup(popup) {
@@ -91,63 +108,43 @@ const renderPopupOverlay = (popupsWindows) => {
 
 renderPopupOverlay(popupsWindows);
 
-//функция создания карточки
-const createCard = (initialCards) => {
-  const templatePhoto = document.querySelector("#template-photo").content;
-  const photoCard = templatePhoto.querySelector(".photo").cloneNode(true);
-  const photoImage = photoCard.querySelector(".photo__image");
-  photoImage.src = initialCards.link;
-  photoImage.alt = initialCards.name;
-  photoCard.querySelector(".photo__text").textContent = initialCards.name;
-
-  //функция like
-  const vectorButton = photoCard.querySelector(".photo__vector");
-  vectorButton.addEventListener("click", (event) => {
-    vectorButton.classList.toggle("photo__vector_active");
-  });
-
-  //функция удаления карточки
-  const photoBinButton = photoCard.querySelector(".photo__bin");
-  photoBinButton.addEventListener("click", (event) => {
-    event.target.closest(".photo").remove();
-  });
-
-  //открытие поп-апа с картинкой
-  photoImage.addEventListener("click", function () {
-    // console.log(photoImage.alt);
-    imagePhoto.src = photoImage.src;
-    imagePhoto.alt = photoImage.alt;
-    imageText.textContent = photoImage.alt;
-    openPopup(imagePopup);
-  });
-
-  return photoCard;
+// создание карточки
+const createCard = (data, cardSelector) => {
+  const card = new Card(data, ".card-template");
+  const cardElement = card.generateCard();
+  cardSelector.prepend(cardElement);
 };
 
-//массив
-function renderInitialCards(initialCards) {
+// рендер карточки
+const renderCard = (initialCards) => {
   initialCards.forEach((item) => {
-    cardsContainer.prepend(createCard(item));
+    createCard(item, cardsContainer);
   });
-}
+};
 
-renderInitialCards(initialCards);
-
-//функция создания карточки с помощью поп-апа
-function addCard(evt) {
+// создание карточки
+const handleAddCard = (evt) => {
   evt.preventDefault();
-  cardsContainer.prepend(
-    createCard({ name: formCardsName.value, link: formCardsLink.value })
+
+  createCard(
+    {
+      name: formCardsName.value,
+      link: formCardsLink.value,
+    },
+    cardsContainer
   );
+
   formCard.reset();
   closePopup(cardsPopup);
-}
-formCard.addEventListener("submit", addCard);
+};
+formCard.addEventListener("submit", handleAddCard);
+
+renderCard(initialCards);
 
 //Сохранение данных для поп-апа формы
 profileOpenButton.addEventListener("click", function () {
   //
-  disableSubmitButton(formSaveButton, obj.inactiveButtonClass);
+  validityForm.disableSubmitButton();
   nameInput.value = profileName.textContent; //записываем данные в инпут из профайла
   jobInput.value = profilejob.textContent;
   openPopup(profilePopup);
@@ -171,7 +168,12 @@ function handleProfileFormSubmit(evt) {
 // он будет следить за событием “submit” - «отправка»
 profileForm.addEventListener("submit", handleProfileFormSubmit);
 
+//renderCard(initialCards);
+validityForm.enableValidation();
+validityCard.enableValidation();
+
+// открытие поп-апа добовления картинки
 cardOpenButton.addEventListener("click", function () {
-  disableSubmitButton(cardCreateButton, obj.inactiveButtonClass);
+  validityCard.disableSubmitButton();
   openPopup(cardsPopup);
-}); // открытие поп-апа добовления картинки
+});

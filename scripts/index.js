@@ -1,6 +1,7 @@
 import { Card } from "./card.js";
 export { imagePhoto, imageText, openPopup, imagePopup };
 import { FormValidator } from "./validate.js";
+import { initialCards } from "./utils.js";
 
 const popupsWindows = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".popup-form"); // поп-пап с формой
@@ -24,33 +25,6 @@ const formCard = cardsPopup.querySelector(".form-card"); //для создани
 const imagePopup = document.querySelector(".popup-image"); // поп-пап открытия картинки
 const imagePhoto = imagePopup.querySelector(".popup__photo"); // открытие картинки
 const imageText = imagePopup.querySelector(".popup__text"); // открытие текста под картинкой
-
-const initialCards = [
-  {
-    name: "Архыз",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/arkhyz.jpg",
-  },
-  {
-    name: "Челябинская область",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/chelyabinsk-oblast.jpg",
-  },
-  {
-    name: "Иваново",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/ivanovo.jpg",
-  },
-  {
-    name: "Камчатка",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kamchatka.jpg",
-  },
-  {
-    name: "Холмогорский район",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/kholmogorsky-rayon.jpg",
-  },
-  {
-    name: "Байкал",
-    link: "https://pictures.s3.yandex.net/frontend-developer/cards-compressed/baikal.jpg",
-  },
-];
 
 const obj = {
   formSelector: ".form",
@@ -108,38 +82,47 @@ const renderPopupOverlay = (popupsWindows) => {
 
 renderPopupOverlay(popupsWindows);
 
-// создание карточки
-const createCard = (data, cardSelector) => {
-  const card = new Card(data, ".card-template");
-  const cardElement = card.generateCard();
-  cardSelector.prepend(cardElement);
-};
-
-// рендер карточки
-const renderCard = (initialCards) => {
-  initialCards.forEach((item) => {
-    createCard(item, cardsContainer);
+// создание карточки и её рендер
+const createCard = () => {
+  initialCards.forEach((data) => {
+    const card = renderCard(data);
+    includeCard(card);
   });
 };
 
-// создание карточки
+const renderCard = (data) => {
+  const card = new Card(data, ".card-template");
+  const cardElement = card.generateCard();
+  return cardElement;
+};
+
+// добавленная карточка отрисовывается в начале
+function includeCard(cardElement) {
+  cardsContainer.prepend(cardElement);
+}
+
+createCard();
+
+// добавление новой карточки
 const handleAddCard = (evt) => {
   evt.preventDefault();
-
-  createCard(
+  // рендируем создаваемую карточку и создаём переменную
+  const newCard = renderCard(
     {
       name: formCardsName.value,
       link: formCardsLink.value,
     },
     cardsContainer
   );
-
+  // добавляем новую карточку в начало
+  includeCard(newCard);
+  //очищаем форму
   formCard.reset();
   closePopup(cardsPopup);
 };
 formCard.addEventListener("submit", handleAddCard);
 
-renderCard(initialCards);
+//renderCard(initialCards);
 
 //Сохранение данных для поп-апа формы
 profileOpenButton.addEventListener("click", function () {

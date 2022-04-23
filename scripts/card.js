@@ -23,8 +23,9 @@ class Card {
     this._setEventListeners();
 
     // Добовляем данные
-    this._element.querySelector(".photo__image").src = this._image;
-    this._element.querySelector(".photo__image").alt = this._text;
+    const photoImage = this._element.querySelector(".photo__image");
+    photoImage.src = this._image;
+    photoImage.alt = this._text;
     this._element.querySelector(".photo__text").textContent = this._text;
 
     return this._element;
@@ -55,8 +56,8 @@ class Card {
     evt.target.classList.toggle("photo__vector_active");
   }
   //bin
-  _handleBinClick(evt) {
-    evt.target.closest(".photo").remove();
+  _handleBinClick() {
+    this._element.remove();
   }
   // imagePopup
   _handlePreviewPicture() {

@@ -1,5 +1,5 @@
 export { Card };
-import { imagePhoto, imageText, openPopup, imagePopup } from "./index.js";
+import { imagePhoto, imageText, imagePopup } from "../pages/index.js";
 // класс создания карточки
 class Card {
   //данные карточки и template

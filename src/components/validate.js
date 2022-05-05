@@ -1,4 +1,3 @@
-//import { obj } from './index.js';
 
 export class FormValidator {
   constructor(data, formList) {

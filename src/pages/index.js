@@ -1,7 +1,9 @@
-import { Card } from "./card.js";
-export { imagePhoto, imageText, openPopup, imagePopup };
-import { FormValidator } from "./validate.js";
-import { initialCards } from "./utils.js";
+import { Card } from "../components/card.js";
+export { imagePhoto, imageText, imagePopup };
+import { FormValidator } from "../components/validate.js";
+import { items } from "../components/utils.js";
+import { Section } from "../components/Section.js";
+//import { Popup } from "../components/Popup.js";
 
 const popupsWindows = document.querySelectorAll(".popup");
 const profilePopup = document.querySelector(".popup-form"); // поп-пап с формой
@@ -39,7 +41,7 @@ const obj = {
 const validityForm = new FormValidator(obj, profileForm);
 const validityCard = new FormValidator(obj, formCard);
 
-//функция открытия поп-апов
+/*//функция открытия поп-апов
 function openPopup(popup) {
   document.addEventListener("keydown", handleEscUp);
   popup.classList.add("popup_active"); //функция для открытия поп-апа
@@ -59,7 +61,9 @@ const handleEscUp = (evt) => {
     const activePopup = document.querySelector(".popup_active");
     closePopup(activePopup);
   }
-};
+};*/
+
+
 
 // Закрытие popup кликом на overlay и клик на крестики поп-апа
 const handleOverlay = (popup) => {
@@ -82,7 +86,17 @@ const renderPopupOverlay = (popupsWindows) => {
 
 renderPopupOverlay(popupsWindows);
 
-// создание карточки и её рендер
+// массив с карточками вставляем в проект
+const renderCard = new Section({ data: items, 
+  renderer: (item) => {
+const card = new Card(item, ".card-template");
+const cardElement = card.generateCard();
+renderCard.addItem(cardElement);}
+}, cardsContainer);
+
+
+
+/*// создание карточки и её рендер
 const createCard = () => {
   initialCards.forEach((data) => {
     const card = renderCard(data);
@@ -99,9 +113,9 @@ const renderCard = (data) => {
 // добавленная карточка отрисовывается в начале
 function includeCard(cardElement) {
   cardsContainer.prepend(cardElement);
-}
+}*/
 
-createCard();
+renderCard.renderItems();
 
 // добавление новой карточки
 const handleAddCard = (evt) => {
@@ -115,7 +129,7 @@ const handleAddCard = (evt) => {
     cardsContainer
   );
   // добавляем новую карточку в начало
-  includeCard(newCard);
+  addItem(newCard);
   //очищаем форму
   formCard.reset();
   closePopup(cardsPopup);

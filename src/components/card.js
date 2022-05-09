@@ -1,12 +1,12 @@
-export { Card };
-import { imagePhoto, imageText, imagePopup } from "../pages/index.js";
+
 // класс создания карточки
-class Card {
+export default class Card {
   //данные карточки и template
-  constructor(data, cardSelector) {
-    this._text = data.name;
+  constructor(data, cardSelector, handleCardClick) {
+    this._text = data.cardname;
     this._image = data.link;
     this._cardSelector = cardSelector;
+    this._handleCardClick = handleCardClick;
   }
 
   _getTemplate() {
@@ -47,8 +47,8 @@ class Card {
     // открытие картинки
     this._element
       .querySelector(".photo__image")
-      .addEventListener("click", (evt) => {
-        this._handlePreviewPicture(evt);
+      .addEventListener("click", () => {
+        this._handleCardClick(this._text, this._image);
       });
   }
   // like
@@ -58,12 +58,5 @@ class Card {
   //bin
   _handleBinClick() {
     this._element.remove();
-  }
-  // imagePopup
-  _handlePreviewPicture() {
-    imagePhoto.src = this._image;
-    imagePhoto.alt = this._text;
-    imageText.textContent = this._text;
-    openPopup(imagePopup);
   }
 }

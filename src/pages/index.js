@@ -5,6 +5,7 @@ import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
+import '../pages/index.css';
 
 const profileOpenButton = document.querySelector(".popup-open"); //кнопка открытия поп-апа
 const profileForm = document.querySelector(".form"); //Воспользуйтесь методом querySelector()

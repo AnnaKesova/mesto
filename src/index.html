@@ -4,19 +4,18 @@
     <meta charset="UTF-8" />
     <meta http-equiv="X-UA-Compatible" content="IE=edge" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="stylesheet" href="./pages/index.css" />
     <title>Mesto</title>
   </head>
   <body class="root">
     <div class="page">
       <header class="page__header header">
-        <img class="header__logo" src="./images/mestologo.svg" alt="Логотип" />
+        <img class="header__logo" src="<%=require('./images/mestologo.svg')%>" alt="Логотип"/> 
       </header>
       <main class="page__content content">
         <section class="profile content__profile">
           <img
             class="profile__avatar"
-            src="./images/Жак-ивКусто.jpg"
+            src="<%=require('./images/Жак-ивКусто.jpg')%>"
             alt="Имя пользователя"
           />
           <div class="profile__info">
@@ -35,7 +34,7 @@
           >
             <img
               class="profile__add"
-              src="./images/добавить.svg"
+              src="<%=require('./images/добавить.svg')%>"
               alt="Добавить фотографии"
             />
           </button>
@@ -182,6 +181,5 @@
         ></button>
       </li>
     </template>
-    <script  type="module" src="./pages/index.js" defer></script>
   </body>
 </html>

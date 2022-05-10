@@ -1,4 +1,3 @@
-
 // класс создания карточки
 export default class Card {
   //данные карточки и template
@@ -20,12 +19,11 @@ export default class Card {
   //присваеваем классы значениям карточек
   generateCard() {
     this._element = this._getTemplate();
-    this._setEventListeners();
-
     // Добовляем данные
-    const photoImage = this._element.querySelector(".photo__image");
-    photoImage.src = this._image;
-    photoImage.alt = this._text;
+    this._photoImage = this._element.querySelector(".photo__image");
+    this._setEventListeners();
+    this._photoImage.src = this._image;
+    this._photoImage.alt = this._text;
     this._element.querySelector(".photo__text").textContent = this._text;
 
     return this._element;
@@ -45,11 +43,9 @@ export default class Card {
         this._handleBinClick(evt);
       });
     // открытие картинки
-    this._element
-      .querySelector(".photo__image")
-      .addEventListener("click", () => {
-        this._handleCardClick(this._text, this._image);
-      });
+    this._photoImage.addEventListener("click", () => {
+      this._handleCardClick(this._text, this._image);
+    });
   }
   // like
   _handleLikeClick(evt) {

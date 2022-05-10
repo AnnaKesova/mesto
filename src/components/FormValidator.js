@@ -10,6 +10,7 @@ export class FormValidator {
     //console.log(this._inputSelector)
     this._formList = formList;
     //console.log (formList)
+    this._buttonElement = this._formList.querySelector(this._submitButtonSelector);
   }
 
   //показывает элемент ошибки
@@ -43,9 +44,6 @@ export class FormValidator {
 
   // функция блокировки кнопки
   disableSubmitButton() {
-    this._buttonElement = this._formList.querySelector(
-      this._submitButtonSelector
-    );
     this._buttonElement.classList.add(this._inactiveButtonClass);
 
     this._buttonElement.disabled = true;

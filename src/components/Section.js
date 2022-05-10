@@ -1,24 +1,22 @@
-import { items } from "./utils.js";
+import { items } from "../utils/utils.js";
 
 export default class Section {
-  constructor({ data, renderer }, cardsContainer) {
+  constructor({ data, renderer }, containerSelector) {
     this._renderItems = data;
     this._renderer = renderer;
-    this._cardsContainer = cardsContainer;
+    this._containerSelector = containerSelector;
     //console.log(data)
   }
 
   // добавленная карточка отрисовывается в начале
   addItem(cardElement) {
-    this._cardsContainer.prepend(cardElement);
+    this._containerSelector.prepend(cardElement);
   }
 
   // создание карточки и её рендер
   renderItems() {
     items.forEach((item) => {
-      const cardElement = this._renderer(item);
-      this.addItem(cardElement);
-      // console.log(this.addItem(cardElement))
+       this._renderer(item);
     });
   }
 }

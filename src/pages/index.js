@@ -1,11 +1,11 @@
-import Card from "../components/card.js";
+import Card from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
-import { items } from "../components/utils.js";
+import { items } from "../utils/utils.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
-import '../pages/index.css';
+import "../pages/index.css";
 
 const profileOpenButton = document.querySelector(".popup-open"); //кнопка открытия поп-апа
 const profileForm = document.querySelector(".form"); //Воспользуйтесь методом querySelector()
@@ -55,7 +55,13 @@ const createCard = (data) => {
 };
 // массив с карточками вставляем в проект
 const renderCard = new Section(
-  { data: items, renderer: createCard },
+  {
+    data: items,
+    renderer: (data) => {
+      const cardElement = createCard(data);
+      renderCard.addItem(cardElement);
+    },
+  },
   cardsContainer
 );
 

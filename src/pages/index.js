@@ -15,8 +15,6 @@ const jobInput = document.querySelector(".form__item_type_job"); // Воспол
 
 const cardsPopup = document.querySelector(".popup-cards"); //поп-пап формы с картинками
 const cardOpenButton = document.querySelector(".add-open"); //кнопка открытия формы поп-апа с картинками
-
-const cardsContainer = document.querySelector(".cards__elements"); // список контейнер
 const formCard = cardsPopup.querySelector(".form-card"); //для создания карточки картинки
 
 const obj = {
@@ -62,7 +60,7 @@ const renderCard = new Section(
       renderCard.addItem(cardElement);
     },
   },
-  cardsContainer
+  ".cards__elements"
 );
 
 renderCard.renderItems();

@@ -17,6 +17,7 @@
     padding: 34px 36px 36px;
     justify-content: center;
     max-width: 430px;
+    width: 100%;
     align-items: flex-start;
   }
 }

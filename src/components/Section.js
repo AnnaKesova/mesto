@@ -1,5 +1,3 @@
-import { items } from "../utils/utils.js";
-
 export default class Section {
   constructor({ data, renderer }, containerSelector) {
     this._renderItems = data;
@@ -15,7 +13,7 @@ export default class Section {
 
   // создание карточки и её рендер
   renderItems() {
-    items.forEach((item) => {
+    this._renderItems.forEach((item) => {
        this._renderer(item);
     });
   }

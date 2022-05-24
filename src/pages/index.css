@@ -41,6 +41,25 @@
 @import url(../blocks/form/_type/form__item_type_error.css);
 @import url(../blocks/popup/__save/_disabled/popup__save_disabled.css);
 @import url(../blocks/popup-image/popup-image.css);
+@import url(../blocks/photo/__numlike/photo__numlike.css);
+@import url(../blocks/photo/__group-like/photo__group-like.css);
+@import url(../blocks/confirm-popup/__heading/confirm-popup__heading.css);
+@import url(../blocks/confirm-popup/__yes/confirm-popup__yes.css);
+@import url(../blocks/profile/__edit-photo/profile__edit-photo.css);
+
+/*.confirm-popup {
+    opacity: 1;
+    visibility: visible;
+}*/
+
+
+/*.popup-avatar {
+    opacity: 1;
+    visibility: visible;
+}*/
+
+
+
 
 
 

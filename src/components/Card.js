@@ -2,7 +2,7 @@
 export default class Card {
   //данные карточки и template
   constructor(data, cardSelector, handleCardClick) {
-    this._text = data.cardname;
+    this._text = data.name;
     this._image = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;

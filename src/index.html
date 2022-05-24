@@ -9,15 +9,23 @@
   <body class="root">
     <div class="page">
       <header class="page__header header">
-        <img class="header__logo" src="<%=require('./images/mestologo.svg')%>" alt="Логотип"/> 
+        <img
+          class="header__logo"
+          src="<%=require('./images/mestologo.svg')%>"
+          alt="Логотип"
+        />
       </header>
       <main class="page__content content">
         <section class="profile content__profile">
-          <img
-            class="profile__avatar"
-            src="<%=require('./images/Жак-ивКусто.jpg')%>"
-            alt="Имя пользователя"
-          />
+          <div class="profile__edit-photo">
+            <img
+              class="profile__avatar"
+              src="#"
+              alt="Аватар пользователя"
+              id="avatar"
+            />
+          </div>
+
           <div class="profile__info">
             <h1 id="header" class="profile__name">Жак-Ив Кусто</h1>
             <button
@@ -47,12 +55,47 @@
         <p class="footer__text">© 2022 Mesto Russia</p>
       </footer>
     </div>
-    <div id="popup-form" class="popup popup-form">
+    <div id="popup-avatars" class="popup popup-avatar">
       <div class="popup__body">
-        <h2 class="popup__heading">Редактировать профиль</h2>
+        <h2 class="popup__heading">Обновить аватар</h2>
         <form class="form" name="myForm" novalidate>
           <input
             class="form__item form__item_type_name"
+            type="url"
+            name="avatar"
+            placeholder="Ссылка на аватар"
+            value=""
+            required
+            id="avatar"
+          />
+          <span
+            class="form__item-error form__item-error_active"
+            id="avatar-error"
+          ></span>
+          <button
+            type="submit"
+            class="button popup__save popup-avatar__save"
+            title="Запомнить"
+            aria-label="Сохранить"
+            disabled
+          >
+            Сохранить
+          </button>
+        </form>
+        <button
+          type="button"
+          class="button popup__close"
+          title="Закрыть"
+          aria-label="Закрытие"
+        ></button>
+      </div>
+    </div>
+    <div id="popup-form" class="popup popup-form">
+      <div class="popup__body">
+        <h2 class="popup__heading">Редактировать профиль</h2>
+        <form class="form" name="myProfile" novalidate>
+          <input
+            class="form__item form__item_type_avatar"
             type="text"
             name="username"
             placeholder="Имя"
@@ -99,6 +142,26 @@
         ></button>
       </div>
     </div>
+    <div id="popup-confirm" class="popup confirm-popup">
+      <div class="popup__body">
+        <h2 class="popup__heading confirm-popup__heading">Вы уверены?</h2>
+        <button
+          type="button"
+          class="button popup__save confirm-popup__yes"
+          title="Согласие"
+          aria-label="Согласиться"
+          disabled
+        >
+          Да
+        </button>
+        <button
+          type="button"
+          class="button popup__close popup-cards__close"
+          title="Закрыть"
+          aria-label="Закрытие"
+        ></button>
+      </div>
+    </div>
     <div id="popup-card" class="popup popup-cards">
       <div class="popup__body">
         <h2 class="popup__heading">Новое место</h2>
@@ -106,7 +169,7 @@
           <input
             class="form__item form__item_type_city"
             type="text"
-            name="cardname"
+            name="name"
             placeholder="Название"
             value=""
             required
@@ -166,12 +229,15 @@
         <img src="#" class="photo__image" alt="" />
         <div class="photo__title">
           <h2 class="photo__text"></h2>
-          <button
-            type="button"
-            class="button photo__vector"
-            title="Нравится"
-            aria-label="Любимые картинки"
-          ></button>
+          <div class="photo__group-like">
+            <button
+              type="button"
+              class="button photo__vector"
+              title="Нравится"
+              aria-label="Любимые картинки"
+            ></button>
+            <span class="photo__numlike">0</span>
+          </div>
         </div>
         <button
           type="button"

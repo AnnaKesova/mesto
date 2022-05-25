@@ -1,6 +1,6 @@
 export default class Section {
-  constructor({ data, renderer }, containerSelector) {
-    this._renderItems = data;
+  constructor( renderer , containerSelector) {
+   // this._renderItems = data;
     this._renderer = renderer;
     this._container = document.querySelector(containerSelector);
     //console.log(data)
@@ -12,8 +12,13 @@ export default class Section {
   }
 
   // создание карточки и её рендер
-  renderItems() {
+ /* renderItems() {
     this._renderItems.forEach((item) => {
+       this._renderer(item);
+    });
+  }*/
+  renderItems(items) {
+    items.forEach((item) => {
        this._renderer(item);
     });
   }

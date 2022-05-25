@@ -9,7 +9,7 @@ import "../pages/index.css";
 import Api from "../components/Api.js";
 
 const profileOpenButton = document.querySelector(".popup-open"); //кнопка открытия поп-апа
-const profileForm = document.querySelector(".form"); //Воспользуйтесь методом querySelector()
+const profileForm = document.querySelector(".form-profile");
 // Находим поля формы в DOM
 const nameInput = document.querySelector(".form__item_type_name"); // Воспользуйтесь инструментом .querySelector()
 const jobInput = document.querySelector(".form__item_type_job"); // Воспользуйтесь инструментом .querySelector()
@@ -69,54 +69,39 @@ const handleCardClick = (name, link) => {
 popupWithOpenImage.setEventListeners();
 
 //создание карточки и темплейта и функция открытия картинки
-const createCard = (data) => {
-  const card = new Card(data, ".card-template", handleCardClick);
+const createCard = (item) => {
+  const card = new Card(
+    { data: item, handleCardClick },
+    ".card-template",
+    userInfo.getUserId()
+  );
   const cardElement = card.generateCard();
   return cardElement;
 };
 
-
 // массив с карточками вставляем в проект
+function cardRenderer(item) {
+  const cardElement = createCard(item);
+  renderCard.addItem(cardElement);
+}
 
-const renderCard = new Section(
-  {
-    data: items,
+const renderCard = new Section(cardRenderer, ".cards__elements");
 
-    renderer: (data) => {
-      const cardElement = createCard(data);
-
-      renderCard.addItem(cardElement);
-    },
-  },
-
-  ".cards__elements"
-);
-
-renderCard.renderItems();
-
-
-
-const dataInitials = api.getInitialCards();
-dataInitials.then((result) => {
+const initialcards = api
+  .getInitialCards()
+  .then((result) => {
     // обрабатываем результат
-    const renderCard = new Section(
-      {
-        data: result.map((item) => ({ name: item.name, link: item.link })),
-        renderer: (data) => {
-          const cardElement = createCard(data);
-          //console.log(item)
-          renderCard.addItem(cardElement);
-        },
-      },
-      ".cards__elements"
-    );
-
+    const cardsInit = result.map((item) => ({
+      name: item.name,
+      link: item.link,
+      id: item._id,
+      ownerID: item.owner._id,
+    }));
+    return cardsInit;
   })
   .catch((err) => {
     console.log(err); // выведем ошибку в консоль
   });
-
-
 
 // открытие поп-апа добовления картинки
 cardOpenButton.addEventListener("click", function () {
@@ -124,89 +109,81 @@ cardOpenButton.addEventListener("click", function () {
   popupWithCard.open();
 });
 
-function addCardApi() {
-  api.addNewCard().then(({ name, link }) => {});
-}
 // поп-пап с картинкой
-const popupWithCard = new PopupWithForm(".popup-cards", {
-  handleFormSubmit: (data) => {
-    api.addNewCard(data).then((res) => {
-      renderCard.addItem(createCard(res));
-      popupWithCard.close();
-    });
-  },
-});
+const popupWithCard = new PopupWithForm(".popup-cards", handleCardAddSubmit);
 
-/*const handleFormSubmit = (data) => {
- data.link = data.link;
- data.name = data.name; 
+function handleCardAddSubmit({ link, name }) {
+  api
+    .addNewCard({  name, link })
+    .then((data) => {
+      renderCard.addItem(
+        createCard({
+          link: data.link,
+          name: data.name,
+          id: data._id,
+          //ownerID: data.owner._id,
+        })
+      );
+      popupWithCard.close();
+    })
+    .catch((err) => console.log(err));
 }
-console.log(data.link)*/
 
 // поп-пап профиль
-const userInfo = new UserInfo(
-  {
-    username: ".profile__name",
-    job: ".profile__job",
-    avatar: ".profile__avatar",
-  },
-  api
-);
+const userInfo = new UserInfo({
+  username: ".profile__name",
+  job: ".profile__job",
+  avatar: ".profile__avatar",
+});
 
 //получение данных для профиля
-userInfo.getUserInfoApi();
-//userInfo.setUserInfo()
-/*function getUserInfoApi() {
-  api.getUserInfoFromApi().then((userData) => {
-    userData.job = userData.about;
-    userData.username = userData.name;
-    avatar.src = userData.avatar;
-    userInfo.setUserInfo(userData);
-    console.log(userData)
+const getUserInfoApi = api
+  .getUserInfoFromApi()
+  .then((getUserInfoApi) => {
+    return getUserInfoApi;
   })
-  .catch((err) => console.log(err))
-}
-getUserInfoApi();
-/*.then((userData) => {
-  userInfo.getUserInfo()
-  this._job.textContent = userData.about;
-  this._username.textContent = userData.name;
-  this._avatar.src = userData.avatar;
-  //this._idUser = userData._id
-console.log(userData.name)
-})
-.catch((err) => console.log(err));*/
-
-/*function setUserInfoApi() {
-  api.addUserInfo().then(({name, about}) => {
-name = data.username;
-about = data.about;
-  })
-}
-setUserInfoApi()*/
-//userInfo.setUserInfo()
+  .catch((err) => console.log(err));
 
 //Сохранение данных для поп-апа формы профиль
 profileOpenButton.addEventListener("click", function () {
-  //
   validityForm.disableSubmitButton();
-
   const profileUserPopup = userInfo.getUserInfo();
-
   nameInput.value = profileUserPopup.username; //записываем данные в инпут из профайла
   jobInput.value = profileUserPopup.job;
   popupWithProfile.open();
 });
 
-const popupWithProfile = new PopupWithForm(".popup-form", {
-  handleFormSubmit: (data) => {
-    userInfo.setUserInfo(data);
-    popupWithProfile.close();
-    console.log(handleFormSubmit);
-  },
-});
+const popupWithProfile = new PopupWithForm(".popup-form", handleFormSubmitUser);
 
+function handleFormSubmitUser({username, job}) {
+  api.addUserInfo({ name: username, about: job })
+    .then((data) => {
+      userInfo.setUserInfo({
+        username: data.name,
+        job: data.about,
+        avatar: data.avatar,
+      });
+      popupWithProfile.close();
+    })
+    .catch((err) => console.log(err));
+}
+// промис для получения данных картинки и пользователя
+Promise.all([initialcards, getUserInfoApi])
+  .then(([cardsInit, getUserInfoApi]) => {
+    renderCard.renderItems(cardsInit);
+    userInfo.setUserId(getUserInfoApi._id);
+
+    userInfo.setUserInfo({
+      username: getUserInfoApi.name,
+      job: getUserInfoApi.about,
+      avatar: getUserInfoApi.avatar,
+    });
+    //console.log(getUserInfoApi)
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// слушатели
 popupWithProfile.setEventListeners();
-//popupWithCard.setEventListeners();
-
-//console.log(setUserInfo)
+popupWithCard.setEventListeners();

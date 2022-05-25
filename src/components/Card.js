@@ -1,11 +1,12 @@
 // класс создания карточки
 export default class Card {
   //данные карточки и template
-  constructor(data, cardSelector, handleCardClick) {
+  constructor({data, handleCardClick}, cardSelector, userID) {
     this._text = data.name;
     this._image = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
+    this._userID = userID;
   }
 
   _getTemplate() {
@@ -15,6 +16,10 @@ export default class Card {
       .cloneNode(true);
 
     return photoCard;
+  }
+
+  getID() {
+    return this._id
   }
   //присваеваем классы значениям карточек
   generateCard() {

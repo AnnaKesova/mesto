@@ -1,12 +1,14 @@
 // класс создания карточки
 export default class Card {
   //данные карточки и template
-  constructor({data, handleCardClick}, cardSelector, userID) {
+  #_userID;
+  constructor({data, handleCardClick, handleBinClick}, cardSelector, userID) {
     this._text = data.name;
     this._image = data.link;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this._userID = userID;
+    this.#_userID = userID;
+   this.handleBinClick = handleBinClick;
   }
 
   _getTemplate() {
@@ -45,7 +47,7 @@ export default class Card {
     this._element
       .querySelector(".photo__bin")
       .addEventListener("click", (evt) => {
-        this._handleBinClick(evt);
+        this.handleBinClick(evt);
       });
     // открытие картинки
     this._photoImage.addEventListener("click", () => {
@@ -57,7 +59,7 @@ export default class Card {
     evt.target.classList.toggle("photo__vector_active");
   }
   //bin
-  _handleBinClick() {
+  /*handleBinClick() {
     this._element.remove();
-  }
+  }*/
 }

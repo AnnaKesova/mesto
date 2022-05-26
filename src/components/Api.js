@@ -49,4 +49,15 @@ export default class Api {
       body: JSON.stringify(data),
     }).then((res) => this._handlePromiseErr(res));
   }
+
+  //добавить нового пользователя
+  addUserAvatar(avatar) {
+    return fetch(this._baseUrl + "/users/me/avatar", {
+      method: "PATCH",
+      headers: this._headers,
+      body: JSON.stringify(avatar),
+    }).then((res) => this._handlePromiseErr(res));
+  }
 }
+
+

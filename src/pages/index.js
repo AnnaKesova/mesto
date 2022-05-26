@@ -7,6 +7,9 @@ import PopupWithForm from "../components/PopupWithForm.js";
 import UserInfo from "../components/UserInfo.js";
 import "../pages/index.css";
 import Api from "../components/Api.js";
+import PopupWithSubmit from "../components/PopupWithSubmit.js"
+
+
 
 const profileOpenButton = document.querySelector(".popup-open"); //кнопка открытия поп-апа
 const profileForm = document.querySelector(".form-profile");
@@ -19,6 +22,10 @@ const cardOpenButton = document.querySelector(".add-open"); //кнопка от�
 
 //const cardsContainer = document.querySelector(".cards__elements"); // список контейнер
 const formCard = cardsPopup.querySelector(".form-card"); //для создания карточки картинки
+const avatarButton = document.querySelector('.profile__edit-photo')
+const avatarPopup = document.querySelector(".popup-avatar")
+//const currentActiveButton = document.querySelector('.popup__save')
+//console.log(currentActiveButton);
 
 const obj = {
   formSelector: ".form",
@@ -36,8 +43,17 @@ const api = new Api({
     "content-type": "application/json",
   },
 });
-/*const dataapi = api.getUserInfo();
-console.log(dataapi.then(data).)*/
+
+
+const renderLoading = (popup, isLoading = false) => {
+
+  const currentActiveButton = document.querySelector(`.${popup} .popup__save`);
+  if (isLoading) {
+    currentActiveButton.textContent = 'Загрузка...';
+  } else {
+    currentActiveButton.textContent = 'Сохранить';
+  }
+};
 
 /*fetch('https://mesto.nomoreparties.co/v1/cohort-41/users/me', {
   headers: {
@@ -52,9 +68,11 @@ console.log(dataapi.then(data).)*/
 //валидация форм
 const validityForm = new FormValidator(obj, profileForm);
 const validityCard = new FormValidator(obj, formCard);
+const validityAvatar = new FormValidator(obj, avatarPopup);
 
 validityForm.enableValidation();
 validityCard.enableValidation();
+validityAvatar.enableValidation();
 
 //поп-пап с картинкой, присвоение значений (это не волшебство)
 const popupWithOpenImage = new PopupWithImage({
@@ -71,7 +89,7 @@ popupWithOpenImage.setEventListeners();
 //создание карточки и темплейта и функция открытия картинки
 const createCard = (item) => {
   const card = new Card(
-    { data: item, handleCardClick },
+    { data: item, handleCardClick, handleBinClick},
     ".card-template",
     userInfo.getUserId()
   );
@@ -95,8 +113,9 @@ const initialcards = api
       name: item.name,
       link: item.link,
       id: item._id,
-      ownerID: item.owner._id,
+      ownerID: item.ownerId,
     }));
+
     return cardsInit;
   })
   .catch((err) => {
@@ -113,6 +132,7 @@ cardOpenButton.addEventListener("click", function () {
 const popupWithCard = new PopupWithForm(".popup-cards", handleCardAddSubmit);
 
 function handleCardAddSubmit({ link, name }) {
+  renderLoading("popup-cards", true);
   api
     .addNewCard({  name, link })
     .then((data) => {
@@ -126,7 +146,12 @@ function handleCardAddSubmit({ link, name }) {
       );
       popupWithCard.close();
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      console.log(err);
+      }) 
+    .finally(() => {
+      renderLoading("popup-cards", false);
+    }); 
 }
 
 // поп-пап профиль
@@ -156,6 +181,7 @@ profileOpenButton.addEventListener("click", function () {
 const popupWithProfile = new PopupWithForm(".popup-form", handleFormSubmitUser);
 
 function handleFormSubmitUser({username, job}) {
+  renderLoading('popup-form', true);
   api.addUserInfo({ name: username, about: job })
     .then((data) => {
       userInfo.setUserInfo({
@@ -165,7 +191,13 @@ function handleFormSubmitUser({username, job}) {
       });
       popupWithProfile.close();
     })
-    .catch((err) => console.log(err));
+  
+   .catch((err) => {
+    console.log(err);
+    }) 
+  .finally(() => {
+    renderLoading('popup-form', false);
+  }); 
 }
 // промис для получения данных картинки и пользователя
 Promise.all([initialcards, getUserInfoApi])
@@ -184,6 +216,45 @@ Promise.all([initialcards, getUserInfoApi])
     console.log(err);
   });
 
+  //попап согласия при удалении картинки
+   const popupConfirm = new PopupWithSubmit(console.log('sdfsdfds'),'.confirm-popup')
+
+function handleBinClick() { 
+  popupConfirm.open();
+  console.log( popupConfirm)
+}
+
+
+// поппап изменения аватара.
+const popupAvatar = new PopupWithForm(".popup-avatar", handleFormSubmitAvatar);
+
+avatarButton.addEventListener("click", function () {
+  validityAvatar.disableSubmitButton()
+  popupAvatar.open();
+})
+
+function handleFormSubmitAvatar({avatar}) {
+  renderLoading('popup-avatar', true)
+  api.addUserAvatar({avatar })
+    .then((data) => {
+      userInfo.setUserInfo({
+        username: data.name,
+        job: data.about,
+        avatar: data.avatar,
+      });
+      popupAvatar.close();
+    })
+  .catch((err) => {
+    console.log(err);
+    }) 
+  .finally(() => {
+    renderLoading('popup-avatar', false);
+  }); 
+}
+
 // слушатели
+//popupConfirm.setEventListeners();
 popupWithProfile.setEventListeners();
 popupWithCard.setEventListeners();
+popupAvatar.setEventListeners();
+

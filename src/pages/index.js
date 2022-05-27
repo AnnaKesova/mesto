@@ -156,7 +156,7 @@ const createCard = (item) => {
   const cardElement = card.generateCard();
   return cardElement;
 };
-debugger
+
 
 // массив с карточками вставляем в проект
 function cardRenderer(item) {

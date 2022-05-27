@@ -3,7 +3,6 @@ export default class UserInfo {
     this._username = document.querySelector(username);
     this._job = document.querySelector(job);
     this._avatar = document.querySelector(avatar);
-    //this._api = api;
   }
 
   getUserInfo() {
@@ -15,8 +14,7 @@ export default class UserInfo {
   }
 
   setUserInfo({ username, job, avatar }) {
-    this._job.textContent = job, 
-    this._username.textContent = username;
+    (this._job.textContent = job), (this._username.textContent = username);
     this._avatar.src = avatar;
   }
 

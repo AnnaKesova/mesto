@@ -1,4 +1,3 @@
-
 export class FormValidator {
   constructor(data, formList) {
     this._formSelector = data.formSelector;
@@ -10,7 +9,9 @@ export class FormValidator {
     //console.log(this._inputSelector)
     this._formList = formList;
     //console.log (formList)
-    this._buttonElement = this._formList.querySelector(this._submitButtonSelector);
+    this._buttonElement = this._formList.querySelector(
+      this._submitButtonSelector
+    );
   }
 
   //показывает элемент ошибки

@@ -47,11 +47,4 @@
 @import url(../blocks/confirm-popup/__yes/confirm-popup__yes.css);
 @import url(../blocks/profile/__edit-photo/profile__edit-photo.css);
 @import url(../blocks/photo/__bin/_active/photo__bin_active.css);
-
-
-
-
-
-
-
-
+@import url(../blocks/form-confirm/form-confirm.css);

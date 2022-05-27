@@ -3,9 +3,9 @@ export default class Card {
   //данные карточки и template
   #_userID;
   constructor(
-    userID,
     { data, handleCardClick, handleBinClick, handleLikeClick },
-    cardSelector
+    cardSelector,
+    userID
   ) {
     this._text = data.name;
     this._image = data.link;
@@ -81,8 +81,8 @@ export default class Card {
 
   _setEventListeners() {
     // like
-    this._elementLikeButton.addEventListener("click", () => {
-      this._handleLikeClick();
+    this._elementLikeButton.addEventListener("click", (evt) => {
+      this._handleLikeClick(evt);
     });
     // bin
     this._element.querySelector(".photo__bin").addEventListener("click", () => {

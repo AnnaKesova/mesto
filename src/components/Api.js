@@ -18,11 +18,6 @@ export default class Api {
       method: "GET",
       headers: this._headers,
     }).then((res) => this._handlePromiseErr(res));
-
-    /*.then(res => res.json())
-         .then((result) => {
-        console.log(result);
-  });*/
   }
   // получение картинок
   getInitialCards() {

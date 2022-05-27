@@ -49,16 +49,6 @@ const renderLoading = (popup, isLoading = false) => {
   }
 };
 
-/*fetch('https://mesto.nomoreparties.co/v1/cohort-41/users/me', {
-  headers: {
-    authorization: 'cce2dc6d-fce0-4adb-80f6-8b8fce306754'
-  }
-})
-  .then(res => res.json())
-  .then((result) => {
-    console.log(result.about);
-  });*/
-
 //валидация форм
 const validityForm = new FormValidator(obj, profileForm);
 const validityCard = new FormValidator(obj, formCard);
@@ -81,50 +71,22 @@ const handleCardClick = (name, link) => {
 popupWithOpenImage.setEventListeners();
 
 //попап согласия при удалении картинки
-const popupConfirm = new PopupWithSubmit(
-  { popupSelector: ".confirm-popup" } /*() => {
-  api
-    .deleteNewCard(card.getId)
-    .then(() => {
-      popupConfirm._card.handleDeleteBinClick();
-      popupConfirm.close();
-    })
-    .catch((err) => console.log(err));
-}*/
-);
+const popupConfirm = new PopupWithSubmit({ popupSelector: ".confirm-popup" });
 
 //создание карточки и темплейта и функция открытия картинки
 const createCard = (item) => {
   const card = new Card(
-    userInfo.getUserId(),
     {
       data: item,
       handleCardClick,
-      /*handleBinClick: () => {
-        popupConfirm.open();
-        const cardId = card.getId();
-         popupConfirm.confirmDeleteMyCard(() => {
-        
-            api
-              .deleteNewCard(cardId)
-              .then(() => {
-                
-               // console.log('fioasfijo')
-                card.handleDeleteBinClick();
-                popupConfirm.close();
-              })
-              .catch((err) => {
-                console.log(err);
-              });
-          });
-      },*/
       handleBinClick: () => {
         popupConfirm.open();
+        //const cardId = card.getId();
         popupConfirm.confirmDeleteMyCard(() => {
-        
           api
             .deleteNewCard(card.getId())
             .then(() => {
+              // console.log('fioasfijo')
               card.handleDeleteBinClick();
               popupConfirm.close();
             })
@@ -133,6 +95,7 @@ const createCard = (item) => {
             });
         });
       },
+
       handleLikeClick: () => {
         if (!card.isLiked()) {
           api
@@ -151,12 +114,12 @@ const createCard = (item) => {
         }
       },
     },
-    ".card-template"
+    ".card-template",
+    userInfo.getUserId()
   );
   const cardElement = card.generateCard();
   return cardElement;
 };
-
 
 // массив с карточками вставляем в проект
 function cardRenderer(item) {
@@ -275,6 +238,7 @@ Promise.all([initialcards, getUserInfoApi])
       job: getUserInfoApi.about,
       avatar: getUserInfoApi.avatar,
     });
+
     //console.log(getUserInfoApi)
   })
   .catch((err) => {

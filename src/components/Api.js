@@ -58,6 +58,28 @@ export default class Api {
       body: JSON.stringify(avatar),
     }).then((res) => this._handlePromiseErr(res));
   }
+
+  //Удалить новую картинку.
+  deleteNewCard(id) {
+    return fetch(this._baseUrl + `/cards/${id}`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => this._handlePromiseErr(res));
+  }
+
+  //Добавить like картинке.
+  putLikeCard(id) {
+    return fetch(this._baseUrl + `/cards/${id}/likes`, {
+      method: "PUT",
+      headers: this._headers,
+    }).then((res) => this._handlePromiseErr(res));
+  }
+
+  //Удалить like картинки.
+  deleteLike(id) {
+    return fetch(this._baseUrl + `/cards/${id}/likes`, {
+      method: "DELETE",
+      headers: this._headers,
+    }).then((res) => this._handlePromiseErr(res));
+  }
 }
-
-

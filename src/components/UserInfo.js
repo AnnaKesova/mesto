@@ -21,10 +21,10 @@ export default class UserInfo {
   }
 
   getUserId() {
-    return this._idUser;
+    return this._userID;
   }
 
   setUserId(id) {
-    this._idUser = id;
+    this._userID = id;
   }
 }

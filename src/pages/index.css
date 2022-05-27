@@ -46,17 +46,9 @@
 @import url(../blocks/confirm-popup/__heading/confirm-popup__heading.css);
 @import url(../blocks/confirm-popup/__yes/confirm-popup__yes.css);
 @import url(../blocks/profile/__edit-photo/profile__edit-photo.css);
-
-/*.confirm-popup {
-    opacity: 1;
-    visibility: visible;
-}*/
+@import url(../blocks/photo/__bin/_active/photo__bin_active.css);
 
 
-/*.popup-avatar {
-    opacity: 1;
-    visibility: visible;
-}*/
 
 
 

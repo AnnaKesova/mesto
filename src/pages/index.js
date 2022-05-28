@@ -242,7 +242,7 @@ avatarButton.addEventListener("click", function () {
   popupAvatar.open();
 });
 
-// валидация
+// 
 validityForm.enableValidation();
 validityCard.enableValidation();
 validityAvatar.enableValidation();

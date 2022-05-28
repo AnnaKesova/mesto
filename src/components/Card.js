@@ -1,23 +1,22 @@
 // класс создания карточки
 export default class Card {
   //данные карточки и template
-  #_userID;
   constructor(
     { data, handleCardClick, handleBinClick, handleLikeClick },
     cardSelector,
-    userID
+    userId
   ) {
     this._text = data.name;
     this._image = data.link;
     this._id = data.id;
     this._likes = data.likes;
-    this._ownerID = data.ownerID;
+    this._ownerId = data.ownerId;
     this._cardSelector = cardSelector;
     this._handleCardClick = handleCardClick;
-    this.#_userID = userID;
+    this._userId = userId;
     this._handleBinClick = handleBinClick;
     this._handleLikeClick = handleLikeClick;
-    this._likesUser = this._likes.some((item) => item._id === this.#_userID);
+    this._likesUser = this._likes.some((item) => item._id === this._userId);
     this._likeCounter = data.likeCounter;
   }
 
@@ -49,11 +48,18 @@ export default class Card {
     this._element.querySelector(".photo__text").textContent = this._text;
     // bin
     this._binElement = this._element.querySelector(".photo__bin");
-    if (this._ownerID === this.#_userID) {
+    if (this._ownerId === this._userId) {
       this._binElement.classList.add("photo__bin_active");
     }
     // like
     this._elementLikeButton = this._element.querySelector(".photo__vector");
+    if (
+      this._likes.some((item) => {
+        return item._id === this._userId;
+      })
+    ) {
+      this._elementLikeButton.classList.add("photo__vector_active");
+    } 
     this._elementLikeCounter = this._element.querySelector(".photo__numlike");
     this._elementLikeCounter.textContent = this._likeCounter;
 

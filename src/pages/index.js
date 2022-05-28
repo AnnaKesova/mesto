@@ -1,6 +1,5 @@
 import Card from "../components/Card.js";
 import { FormValidator } from "../components/FormValidator.js";
-import { items } from "../utils/utils.js";
 import Section from "../components/Section.js";
 import PopupWithImage from "../components/PopupWithImage.js";
 import PopupWithForm from "../components/PopupWithForm.js";
@@ -8,20 +7,18 @@ import UserInfo from "../components/UserInfo.js";
 import "../pages/index.css";
 import Api from "../components/Api.js";
 import PopupWithSubmit from "../components/PopupWithSubmit.js";
-
-const profileOpenButton = document.querySelector(".popup-open"); //кнопка открытия поп-апа
-const profileForm = document.querySelector(".form-profile");
-// Находим поля формы в DOM
-const nameInput = document.querySelector(".form__item_type_name"); // Воспользуйтесь инструментом .querySelector()
-const jobInput = document.querySelector(".form__item_type_job"); // Воспользуйтесь инструментом .querySelector()
-
-const cardsPopup = document.querySelector(".popup-cards"); //поп-пап формы с картинками
-const cardOpenButton = document.querySelector(".add-open"); //кнопка открытия формы поп-апа с картинками
-
-//const cardsContainer = document.querySelector(".cards__elements"); // список контейнер
-const formCard = cardsPopup.querySelector(".form-card"); //для создания карточки картинки
-const avatarButton = document.querySelector(".profile__edit-photo");
-const avatarPopup = document.querySelector(".popup-avatar");
+import {
+  profileOpenButton,
+  profileForm,
+  nameInput,
+  jobInput,
+  cardsPopup,
+  cardOpenButton,
+  formCard,
+  avatarButton,
+  avatarPopup,
+  renderLoading,
+} from "../utils/utils.js";
 
 const obj = {
   formSelector: ".form",
@@ -40,23 +37,10 @@ const api = new Api({
   },
 });
 
-const renderLoading = (popup, isLoading = false) => {
-  const currentActiveButton = document.querySelector(`.${popup} .popup__save`);
-  if (isLoading) {
-    currentActiveButton.textContent = "Загрузка...";
-  } else {
-    currentActiveButton.textContent = "Сохранить";
-  }
-};
-
 //валидация форм
 const validityForm = new FormValidator(obj, profileForm);
 const validityCard = new FormValidator(obj, formCard);
 const validityAvatar = new FormValidator(obj, avatarPopup);
-
-validityForm.enableValidation();
-validityCard.enableValidation();
-validityAvatar.enableValidation();
 
 //поп-пап с картинкой, присвоение значений (это не волшебство)
 const popupWithOpenImage = new PopupWithImage({
@@ -68,7 +52,6 @@ const popupWithOpenImage = new PopupWithImage({
 const handleCardClick = (name, link) => {
   popupWithOpenImage.open(name, link);
 };
-popupWithOpenImage.setEventListeners();
 
 //попап согласия при удалении картинки
 const popupConfirm = new PopupWithSubmit({ popupSelector: ".confirm-popup" });
@@ -81,12 +64,10 @@ const createCard = (item) => {
       handleCardClick,
       handleBinClick: () => {
         popupConfirm.open();
-        //const cardId = card.getId();
         popupConfirm.confirmDeleteMyCard(() => {
           api
             .deleteNewCard(card.getId())
             .then(() => {
-              // console.log('fioasfijo')
               card.handleDeleteBinClick();
               popupConfirm.close();
             })
@@ -95,39 +76,25 @@ const createCard = (item) => {
             });
         });
       },
-
       handleLikeClick: () => {
-        if (!card.isLiked()) {
-          api
-            .putLikeCard(card.getId())
-            .then((data) => {
-              card.toggleLikesState(data);
-            })
-            .catch((err) => console.log(err));
-        } else {
-          api
-            .deleteLike(card.getId())
-            .then((data) => {
-              card.toggleLikesState(data);
-            })
-            .catch((err) => console.log(err));
-        }
+        const id = card.getId();
+        const action = card.isLiked()
+          ? api.deleteLike(id)
+          : api.putLikeCard(id);
+        action
+          .then((data) => {
+            card.toggleLikesState(data);
+          })
+          .catch((err) => console.log(err));
       },
     },
     ".card-template",
     userInfo.getUserId()
   );
-  const cardElement = card.generateCard();
-  return cardElement;
+  return card.generateCard();
 };
 
-// массив с карточками вставляем в проект
-function cardRenderer(item) {
-  const cardElement = createCard(item);
-  renderCard.addItem(cardElement);
-}
-
-const renderCard = new Section(cardRenderer, ".cards__elements");
+const cardsList = new Section(renderCard, ".cards__elements");
 
 const initialcards = api
   .getInitialCards()
@@ -137,7 +104,7 @@ const initialcards = api
       name: item.name,
       link: item.link,
       id: item._id,
-      ownerID: item.owner._id,
+      ownerId: item.owner._id,
       likes: item.likes,
       likeCounter: item.likes.length,
     }));
@@ -148,26 +115,41 @@ const initialcards = api
     console.log(err); // выведем ошибку в консоль
   });
 
-// открытие поп-апа добовления картинки
-cardOpenButton.addEventListener("click", function () {
-  validityCard.disableSubmitButton();
-  popupWithCard.open();
-});
-
 // поп-пап с картинкой
 const popupWithCard = new PopupWithForm(".popup-cards", handleCardAddSubmit);
+
+// поп-пап профиль
+const userInfo = new UserInfo({
+  username: ".profile__name",
+  job: ".profile__job",
+  avatar: ".profile__avatar",
+});
+
+//получение данных для профиля
+const getUserInfoApi = api.getUserInfoFromApi();
+
+const popupWithProfile = new PopupWithForm(".popup-form", handleFormSubmitUser);
+
+// поппап изменения аватара.
+const popupAvatar = new PopupWithForm(".popup-avatar", handleFormSubmitAvatar);
+
+// массив с карточками вставляем в проект
+function renderCard(item) {
+  const cardElement = createCard(item);
+  cardsList.addItem(cardElement);
+}
 
 function handleCardAddSubmit({ link, name }) {
   renderLoading("popup-cards", true);
   api
     .addNewCard({ name, link })
     .then((data) => {
-      renderCard.addItem(
+      cardsList.addItem(
         createCard({
           link: data.link,
           name: data.name,
           id: data._id,
-          ownerID: data.owner._id,
+          ownerId: data.owner._id,
           likeCounter: data.likes.length,
           likes: data.likes,
         })
@@ -182,31 +164,25 @@ function handleCardAddSubmit({ link, name }) {
     });
 }
 
-// поп-пап профиль
-const userInfo = new UserInfo({
-  username: ".profile__name",
-  job: ".profile__job",
-  avatar: ".profile__avatar",
-});
-
-//получение данных для профиля
-const getUserInfoApi = api
-  .getUserInfoFromApi()
-  .then((getUserInfoApi) => {
-    return getUserInfoApi;
-  })
-  .catch((err) => console.log(err));
-
-//Сохранение данных для поп-апа формы профиль
-profileOpenButton.addEventListener("click", function () {
-  validityForm.disableSubmitButton();
-  const profileUserPopup = userInfo.getUserInfo();
-  nameInput.value = profileUserPopup.username; //записываем данные в инпут из профайла
-  jobInput.value = profileUserPopup.job;
-  popupWithProfile.open();
-});
-
-const popupWithProfile = new PopupWithForm(".popup-form", handleFormSubmitUser);
+function handleFormSubmitAvatar({ avatar }) {
+  renderLoading("popup-avatar", true);
+  api
+    .addUserAvatar({ avatar })
+    .then((data) => {
+      userInfo.setUserInfo({
+        username: data.name,
+        job: data.about,
+        avatar: data.avatar,
+      });
+      popupAvatar.close();
+    })
+    .catch((err) => {
+      console.log(err);
+    })
+    .finally(() => {
+      renderLoading("popup-avatar", false);
+    });
+}
 
 function handleFormSubmitUser({ username, job }) {
   renderLoading("popup-form", true);
@@ -232,48 +208,46 @@ function handleFormSubmitUser({ username, job }) {
 Promise.all([initialcards, getUserInfoApi])
   .then(([cardsInit, getUserInfoApi]) => {
     userInfo.setUserId(getUserInfoApi._id);
-    renderCard.renderItems(cardsInit);
+    cardsList.renderItems(cardsInit);
     userInfo.setUserInfo({
       username: getUserInfoApi.name,
       job: getUserInfoApi.about,
       avatar: getUserInfoApi.avatar,
     });
-
-    //console.log(getUserInfoApi)
   })
   .catch((err) => {
     console.log(err);
   });
 
-// поппап изменения аватара.
-const popupAvatar = new PopupWithForm(".popup-avatar", handleFormSubmitAvatar);
+// слушатели
 
+// открытие поп-апа добовления картинки
+cardOpenButton.addEventListener("click", function () {
+  validityCard.disableSubmitButton();
+  popupWithCard.open();
+});
+
+//Сохранение данных для поп-апа формы профиль
+profileOpenButton.addEventListener("click", function () {
+  validityForm.disableSubmitButton();
+  const { username, job } = userInfo.getUserInfo();
+  nameInput.value = username; //записываем данные в инпут из профайла
+  jobInput.value = job;
+  popupWithProfile.open();
+});
+
+//открытие попапа с аватаром
 avatarButton.addEventListener("click", function () {
   validityAvatar.disableSubmitButton();
   popupAvatar.open();
 });
 
-function handleFormSubmitAvatar({ avatar }) {
-  renderLoading("popup-avatar", true);
-  api
-    .addUserAvatar({ avatar })
-    .then((data) => {
-      userInfo.setUserInfo({
-        username: data.name,
-        job: data.about,
-        avatar: data.avatar,
-      });
-      popupAvatar.close();
-    })
-    .catch((err) => {
-      console.log(err);
-    })
-    .finally(() => {
-      renderLoading("popup-avatar", false);
-    });
-}
+// валидация
+validityForm.enableValidation();
+validityCard.enableValidation();
+validityAvatar.enableValidation();
 
-// слушатели
+popupWithOpenImage.setEventListeners();
 popupConfirm.setEventListeners();
 popupWithProfile.setEventListeners();
 popupWithCard.setEventListeners();

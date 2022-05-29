@@ -83,7 +83,7 @@ const createCard = (item) => {
           : api.putLikeCard(id);
         action
           .then((data) => {
-            card.toggleLikesState(data);
+            card.setLikes(data);
           })
           .catch((err) => console.log(err));
       },

@@ -16,7 +16,6 @@ export default class Card {
     this._userId = userId;
     this._handleBinClick = handleBinClick;
     this._handleLikeClick = handleLikeClick;
-    this._likesUser = this._likes.some((item) => item._id === this._userId);
     this._likeCounter = data.likeCounter;
   }
 
@@ -34,7 +33,7 @@ export default class Card {
   }
 
   isLiked() {
-    return this._likesUser;
+    return  this._likes.some((item) => item._id === this._userId);
   }
 
   //присваеваем классы значениям карточек
@@ -54,28 +53,28 @@ export default class Card {
     // like
     this._elementLikeButton = this._element.querySelector(".photo__vector");
     if (
-      this._likes.some((item) => {
-        return item._id === this._userId;
-      })
-    ) {
+      this._isLiked)
+     {
       this._elementLikeButton.classList.add("photo__vector_active");
     } 
-    this._elementLikeCounter = this._element.querySelector(".photo__numlike");
-    this._elementLikeCounter.textContent = this._likeCounter;
 
     this._setEventListeners();
     return this._element;
   }
-
-  // like добавление или удаление
-  toggleLikesState(data) {
-    this._elementLikeCounter.textContent = data.likes.length;
-    this._likesUser = !this._likesUser;
-
+  
+  setLikes(data) {
+    this. _likes = data.likes;
+    this._toggleLikesState();
+  }
+  
+  _toggleLikesState() {
+    this._elementLikeCounter = this._element.querySelector(".photo__numlike");
+    this._elementLikeCounter.textContent = this._likes.length;
     if (this.isLiked()) {
       this._elementLikeButton.classList.add("photo__vector_active");
     } else {
       this._elementLikeButton.classList.remove("photo__vector_active");
+
     }
   }
 

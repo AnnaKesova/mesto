@@ -52,18 +52,14 @@ export default class Card {
     }
     // like
     this._elementLikeButton = this._element.querySelector(".photo__vector");
-    if (
-      this._isLiked)
-     {
-      this._elementLikeButton.classList.add("photo__vector_active");
-    } 
+   this._toggleLikesState()
 
     this._setEventListeners();
     return this._element;
   }
   
   setLikes(data) {
-    this. _likes = data.likes;
+    this._likes = data.likes;
     this._toggleLikesState();
   }
   
